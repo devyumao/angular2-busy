@@ -1,0 +1,55 @@
+{
+    "name": "angular2-busy",
+    "description": "Angular 2 Busy: show busy/loading indicators on any promise",
+    "version": "0.2.0-rc.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/devyumao/angular2-busy.git"
+    },
+    "keyword": [
+        "angular",
+        "angular2",
+        "busy",
+        "loading",
+        "angular2-busy",
+        "ng2-busy"
+    ],
+    "author": "Yumao",
+    "license": "MIT",
+    "main": "",
+    "typings": "",
+    "homepage": "https://github.com/devyumao/angular2-busy",
+    "bugs": {
+        "url": "https://github.com/devyumao/angular2-busy"
+    },
+    "scripts": {
+        "webpack": "webpack",
+        "watch": "webpack-dev-server --inline --progress --profile --colors --watch --display-error-details --display-cached --content-base demo/asset"
+    },
+    "dependencies": {
+        "@angular/core": "^2.0.0-rc.1",
+        "@angular/compiler": "^2.0.0-rc.1",
+        "@angular/common": "^2.0.0-rc.1",
+        "@angular/http": "2.0.0-rc.1",
+        "@angular/platform-browser": "^2.0.0-rc.1",
+        "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
+        "core-js": "^2.4.0",
+        "reflect-metadata": "^0.1.3",
+        "rxjs": "5.0.0-beta.6",
+        "zone.js": "^0.6.12"
+    },
+    "devDependencies": {
+        "awesome-typescript-loader": "^0.19.1",
+        "es6-promise": "^3.1.2",
+        "es6-shim": "^0.35.0",
+        "html-webpack-plugin": "^2.19.0",
+        "less": "^2.7.1",
+        "less-loader": "^2.2.3",
+        "raw-loader": "^0.5.1",
+        "tslint": "^3.10.2",
+        "typescript": "~1.8.10",
+        "typings": "^0.8.1",
+        "webpack": "^1.12.15",
+        "webpack-dev-server": "^1.14.1"
+    }
+}
