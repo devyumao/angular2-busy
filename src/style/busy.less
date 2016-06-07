@@ -1,0 +1,90 @@
+.busy {
+    z-index: 1002;
+
+    &,
+    > * {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+    }
+}
+
+.busy-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1001;
+    background: #fff;
+    opacity: .7;
+}
+
+.busy-default-wrapper {
+    text-align: center;
+}
+
+.busy-default-sign {
+    position: relative;
+    display: inline-block;
+    z-index: 1003;
+    padding-bottom: 6px;
+    color: #333;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    // border-top: 0;
+    border-radius: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: .5px 1px 1px #e7e7e7; // 待定
+}
+
+.busy-default-text {
+    margin: 14px 12px 6px 50px;
+    font-size: 12px;
+    text-align: left;
+    max-width: 400;
+}
+
+.busy-default-spinner {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+
+    div {
+        position: absolute;
+        left: 44.5%;
+        top: 37%;
+        width: 10%;
+        height: 26%;
+        background: #666;
+        border-radius: 50px;
+        box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+        opacity: 0;
+        animation: busy-spinner-anim 1s linear infinite;
+    }
+
+    .generate-bars(@n, @i: 1) when (@i =< @n) {
+        .bar@{i} {
+            transform: rotate(unit(360 / 12 * (@i - 1), deg)) translate(0, -142%);
+            animation-delay: unit(-1 + 1 / 12 * (@i - 1), s);
+        }
+        .generate-bars(@n, (@i + 1));
+    }
+
+    .generate-bars(12);
+}
+
+@keyframes busy-spinner-anim {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.25;
+    }
+}

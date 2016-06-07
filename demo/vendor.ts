@@ -11,4 +11,4 @@ import '@angular/common';
 import '@angular/http';
 
 // RxJS
-import 'rxjs/Rx';
+import 'rxjs/add/operator/toPromise';
