@@ -1,13 +1,27 @@
+/**
+ * @file Component: App
+ * @author yumao<yuzhang.lille@gmail.com>
+ */
+
 import {Component, OnInit} from '@angular/core';
 import {Http, HTTP_PROVIDERS} from '@angular/http';
 
-import {BusyDirective, BusyService} from '../../src';
+import {BusyService} from '../../src';
 // import {BusyDirective} from '../..';
+import {GithubCornerComponent} from './github-corner';
+import {HeaderComponent} from './header';
+import {OptionsComponent} from './options';
+import {TableComponent} from './table';
 
 @Component({
     selector: 'app',
     providers: [Http, HTTP_PROVIDERS, BusyService],
-    directives: [BusyDirective],
+    directives: [
+        GithubCornerComponent,
+        HeaderComponent,
+        OptionsComponent,
+        TableComponent
+    ],
     template: require('./app.component.html'),
     styles: [require('./app.component.less')]
 })
