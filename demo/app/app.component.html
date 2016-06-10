@@ -4,10 +4,10 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
-            <demo-options></demo-options>
+            <demo-options #options></demo-options>
         </div>
         <div class="col-sm-offset-1 col-sm-7">
-            <demo-table></demo-table>
+            <demo-table [loading]="options.data"></demo-table>
         </div>
     </div>
 </div>

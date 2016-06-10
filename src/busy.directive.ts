@@ -17,7 +17,7 @@ import {
     ApplicationRef
 } from '@angular/core';
 
-import {PromiseTrackerService} from './promise-tracker.service'
+import {PromiseTrackerService} from './promise-tracker.service';
 import {BusyService} from './busy.service';
 import {IBusyConfig} from './busy-config';
 import {BusyBackdropComponent} from './busy-backdrop.component';
@@ -29,10 +29,8 @@ import {BusyBackdropComponent} from './busy-backdrop.component';
 export class BusyDirective implements OnInit, OnChanges {
     private optionsValue: IBusyConfig;
     timestamp: number;
-    wrapperId: string;
-    backdropWrapperId: string;
     el: HTMLElement;
-    currentTemplate: string;
+    template: string;
     backdrop: boolean;
     private busyRef: ComponentRef<any>;
     private backdropRef: ComponentRef<BusyBackdropComponent>;
@@ -72,29 +70,25 @@ export class BusyDirective implements OnInit, OnChanges {
     ngOnChanges(changes: {[propName: string]: SimpleChange}) {
         let options = this.options;
 
-        // let promiseSet = new Set(options.promise);
-        // let diff = new Set(
-        //     this.tracker.promiseList.filter(item => !promiseSet.has(item))
-        // );
-        // console.debug('DIFF', diff.size);
-        // TODO: diff size
-        if (true) {
-            // TODO: 简化写法
-            this.tracker.reset({
-                promiseList: options.promise,
-                delay: options.delay,
-                minDuration: options.minDuration
-            });
+        if (this.busyRef) {
+            this.busyRef.instance.message = options.message;
         }
 
+        !this.tracker.equals(options.promise)
+        && this.tracker.reset({
+            promiseList: options.promise,
+            delay: options.delay,
+            minDuration: options.minDuration
+        });
+
         if (!this.busyRef
-            || this.currentTemplate !== options.template
+            || this.template !== options.template
             || this.backdrop !== options.backdrop
         ) {
             this.busyRef && this.busyRef.destroy();
             this.backdropRef && this.backdropRef.destroy();
 
-            this.currentTemplate = options.template;
+            this.template = options.template;
             this.backdrop = options.backdrop;
 
             options.backdrop && this.loadBackdrop();
@@ -103,21 +97,18 @@ export class BusyDirective implements OnInit, OnChanges {
         }
     }
 
-    loadBackdrop() {
+    private loadBackdrop() {
         // this.loader.loadNextToLocation(BusyBackdropComponent, this.viewContainerRef)
         //     .then(componentRef => {
         //         componentRef.instance.tracker = this.tracker;
         //         return this.backdropRef = componentRef;
         //     });
 
-        if (!this.backdropWrapperId) {
-            this.backdropWrapperId = this.createWrapper('backdrop-wrapper').id;
-        }
+        const id = this.createWrapper('backdrop-wrapper').id;
 
         // https://github.com/angular/angular/issues/6223
-        this.loader.loadAsRoot(BusyBackdropComponent, '#' + this.backdropWrapperId, this.injector)
+        this.loader.loadAsRoot(BusyBackdropComponent, '#' + id, this.injector)
             .then(componentRef => {
-                componentRef.instance.tracker = this.tracker;
                 (<any>this.appRef)._loadComponent(componentRef);
                 componentRef.onDestroy(() => {
                     (<any>this.appRef)._unloadComponent(componentRef);
@@ -126,23 +117,19 @@ export class BusyDirective implements OnInit, OnChanges {
             });
     }
 
-    loadBusy() {
-        if (!this.wrapperId) {
-            this.wrapperId = this.createWrapper('wrapper').id;
-        }
-
+    private loadBusy() {
         // this.loader.loadNextToLocation(BusyComponent, this.viewContainerRef)
         //     .then(componentRef => this.busyRef = componentRef);
 
-        const options = this.options;
-        const BusyComponent = this.createBusyComponentClass(
-            options.template,
-            options.message,
-            options.wrapperClass
-        )
+        const id = this.createWrapper('wrapper').id;
 
-        this.loader.loadAsRoot(BusyComponent, '#' + this.wrapperId, this.injector)
+        const options = this.options;
+        const BusyComponent = this.createBusyComponentClass(options.template)
+
+        this.loader.loadAsRoot(BusyComponent, '#' + id, this.injector)
             .then(componentRef => {
+                componentRef.instance.message = options.message;
+                componentRef.instance.wrapperClass = options.wrapperClass;
                 (<any>this.appRef)._loadComponent(componentRef);
                 componentRef.onDestroy(() => {
                     (<any>this.appRef)._unloadComponent(componentRef);
@@ -151,7 +138,7 @@ export class BusyDirective implements OnInit, OnChanges {
             });
     }
 
-    createWrapper(name) {
+    private createWrapper(name) {
         if (!this.timestamp) {
             this.timestamp = new Date().getTime();
         }
@@ -163,22 +150,25 @@ export class BusyDirective implements OnInit, OnChanges {
         return wrapper;
     }
 
-    private createBusyComponentClass(template: string, message: string, wrapperClass: string) {
-        let tracker = this.tracker;
-
+    private createBusyComponentClass(template: string) {
         @Component({
             selector: 'ng-busy',
-            template: '<div class="'
-                + wrapperClass
-                + '" [ngStyle]="{display: isActive() ? \'block\' : \'none\'}">'
+            template: `
+                <div [class]="wrapperClass"
+                     [ngStyle]="{display: isActive() ? 'block' : 'none'}">
+                `
                 + template
                 + '</div>'
         })
         class BusyComponent {
-            message: string = message;
+            message: string;
+            wrapperClass: string;
+
+            constructor(private tracker: PromiseTrackerService) {
+            }
 
             isActive() {
-                return tracker.isActive();
+                return this.tracker.isActive();
             }
         }
 

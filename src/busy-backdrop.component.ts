@@ -5,6 +5,8 @@
 
 import {Component, Input} from '@angular/core';
 
+import {PromiseTrackerService} from './promise-tracker.service';
+
 @Component({
     selector: 'ng-busy-backdrop',
     template: `
@@ -12,9 +14,7 @@ import {Component, Input} from '@angular/core';
     `
 })
 export class BusyBackdropComponent {
-    @Input() tracker;
-
-    constructor() {
+    constructor(private tracker: PromiseTrackerService) {
     }
 
     isActive() {

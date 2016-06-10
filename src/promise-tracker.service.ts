@@ -3,22 +3,29 @@
  * @author yumao<yuzhang.lille@gmail.com>
  */
 
-import {Injectable} from '@angular/core';
+// Inspired by angular-promise-tracker
+
+import {Injectable, IterableDiffers} from '@angular/core';
 
 @Injectable()
 export class PromiseTrackerService {
-    promiseList: Array<Promise<any>> = [];
-    delayPromise: number;
-    durationPromise: number;
+    promiseList: Promise<any>[] = [];
+    delayPromise: number | any;
+    durationPromise: number | any;
     delayJustFinished: boolean = false;
     minDuration: number;
+    differ: any;
 
-    reset(options) { // TODO: type options
+    constructor(private differs: IterableDiffers) {
+        this.differ = differs.find(this.promiseList).create(null);
+    }
+
+    reset(options: IPromiseTrackerOptions) {
         this.minDuration = options.minDuration;
 
         this.promiseList = [];
         options.promiseList.forEach(promise => {
-            if (!promise || promise.busyFulfilled) {
+            if (!promise || promise['busyFulfilled']) {
                 return;
             }
             this.addPromise(promise);
@@ -43,7 +50,7 @@ export class PromiseTrackerService {
                 () => {
                     this.durationPromise = null;
                 },
-                options.duration + (options.delay || 0)
+                options.minDuration + (options.delay || 0)
             );
         }
     }
@@ -62,7 +69,7 @@ export class PromiseTrackerService {
     }
 
     private finishPromise(promise: Promise<any>) {
-        Object.assign(promise, {busyFulfilled: true});
+        promise['busyFulfilled'] = true;
         const index = this.promiseList.indexOf(promise);
         if (index === -1) {
             return;
@@ -88,4 +95,14 @@ export class PromiseTrackerService {
         }
         return this.promiseList.length > 0;
     }
+
+    equals(promises: Promise<any>[]) {
+        return !this.differ.diff(promises);
+    }
+}
+
+export interface IPromiseTrackerOptions {
+    minDuration: number;
+    delay: number;
+    promiseList: Promise<any>[];
 }

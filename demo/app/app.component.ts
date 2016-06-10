@@ -6,8 +6,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Http, HTTP_PROVIDERS} from '@angular/http';
 
-import {BusyService} from '../../src';
-// import {BusyDirective} from '../..';
+import {BusyService} from '../..';
 import {GithubCornerComponent} from './github-corner';
 import {HeaderComponent} from './header';
 import {OptionsComponent} from './options';
