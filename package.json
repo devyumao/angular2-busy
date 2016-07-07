@@ -1,7 +1,7 @@
 {
   "name": "angular2-busy",
   "description": "Angular 2 Busy: show busy/loading indicators on any promise",
-  "version": "0.2.0-rc.1",
+  "version": "0.2.0-rc.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/devyumao/angular2-busy.git"
@@ -16,7 +16,7 @@
   ],
   "author": "Yumao",
   "license": "MIT",
-  "main": "",
+  "main": "index.ts",
   "typings": "",
   "homepage": "https://github.com/devyumao/angular2-busy",
   "bugs": {
@@ -31,12 +31,14 @@
     "watch:demo": "NODE_ENV=demo webpack-dev-server --inline --progress --profile --colors --watch --display-error-details --display-cached --content-base demo/asset"
   },
   "dependencies": {
-    "@angular/common": "^2.0.0-rc.1",
-    "@angular/compiler": "^2.0.0-rc.1",
-    "@angular/core": "^2.0.0-rc.1",
-    "@angular/http": "2.0.0-rc.1",
-    "@angular/platform-browser": "^2.0.0-rc.1",
-    "@angular/platform-browser-dynamic": "^2.0.0-rc.1",
+    "@angular/common": "^2.0.0-rc.4",
+    "@angular/compiler": "^2.0.0-rc.4",
+    "@angular/core": "^2.0.0-rc.4",
+    "@angular/http": "^2.0.0-rc.4",
+    "@angular/platform-browser": "^2.0.0-rc.4",
+    "@angular/platform-browser-dynamic": "^2.0.0-rc.4",
+    "@angular/router": "^3.0.0-beta.1",
+    "@angular/router-deprecated": "^2.0.0-rc.2",
     "bootstrap": "^4.0.0-alpha.2",
     "core-js": "^2.4.0",
     "reflect-metadata": "^0.1.3",
