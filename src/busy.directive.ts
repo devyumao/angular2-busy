@@ -8,26 +8,32 @@ import {
     Component,
     Input,
     ElementRef,
-    OnInit,
-    OnChanges,
-    SimpleChange,
+    DoCheck,
     DynamicComponentLoader,
     ComponentRef,
     Injector,
-    ApplicationRef
+    ApplicationRef,
+    trigger,
+    state,
+    style,
+    transition,
+    animate
 } from '@angular/core';
 
+import {equals} from './util';
 import {PromiseTrackerService} from './promise-tracker.service';
 import {BusyService} from './busy.service';
 import {IBusyConfig} from './busy-config';
 import {BusyBackdropComponent} from './busy-backdrop.component';
 
- @Directive({
-     selector: '[ngBusy]',
-     providers: [PromiseTrackerService]
- })
-export class BusyDirective implements OnInit, OnChanges {
-    private optionsValue: IBusyConfig;
+@Directive({
+    selector: '[ngBusy]',
+    providers: [PromiseTrackerService]
+})
+export class BusyDirective implements DoCheck {
+    @Input('ngBusy') options: any;
+    private optionsRecord: any;
+    private optionsNorm: IBusyConfig;
     timestamp: number;
     el: HTMLElement;
     template: string;
@@ -41,45 +47,51 @@ export class BusyDirective implements OnInit, OnChanges {
         private tracker: PromiseTrackerService,
         private loader: DynamicComponentLoader,
         private injector: Injector,
-        private appRef: ApplicationRef) {
+        private appRef: ApplicationRef
+    ) {
         this.el = elRef.nativeElement;
     }
 
-    @Input('ngBusy') set options(options: any) {
+    private normalizeOptions(options: any) {
         if (!options) {
             options = {promise: null};
         }
-        else if (Array.isArray(options) || options.then) {
+        else if (Array.isArray(options)) {
             options = {promise: options};
         }
         options = Object.assign({}, this.service.config, options);
         if (!Array.isArray(options.promise)) {
             options.promise = [options.promise];
         }
-        this.optionsValue = options;
+        return options;
     }
 
-    get options() {
-        return this.optionsValue;
+    dectectOptionsChange() {
+        if (equals(this.optionsNorm, this.optionsRecord)) {
+            return false;
+        }
+        this.optionsRecord = this.optionsNorm;
+        return true;
     }
 
-    ngOnInit() {
-    }
+    // As ngOnChanges does not work on Object detection, ngDoCheck is using
+    ngDoCheck() {
+        let options = this.optionsNorm = this.normalizeOptions(this.options);
 
-    // TODO: 拆分方法
-    ngOnChanges(changes: {[propName: string]: SimpleChange}) {
-        let options = this.options;
+        if (!this.dectectOptionsChange()) {
+            return;
+        }
 
         if (this.busyRef) {
             this.busyRef.instance.message = options.message;
         }
 
-        !this.tracker.equals(options.promise)
-        && this.tracker.reset({
-            promiseList: options.promise,
-            delay: options.delay,
-            minDuration: options.minDuration
-        });
+        !equals(options.promise, this.tracker.promiseList)
+            && this.tracker.reset({
+                promiseList: options.promise,
+                delay: options.delay,
+                minDuration: options.minDuration
+            });
 
         if (!this.busyRef
             || this.template !== options.template
@@ -98,15 +110,9 @@ export class BusyDirective implements OnInit, OnChanges {
     }
 
     private loadBackdrop() {
-        // this.loader.loadNextToLocation(BusyBackdropComponent, this.viewContainerRef)
-        //     .then(componentRef => {
-        //         componentRef.instance.tracker = this.tracker;
-        //         return this.backdropRef = componentRef;
-        //     });
-
         const id = this.createWrapper('backdrop-wrapper').id;
 
-        // https://github.com/angular/angular/issues/6223
+        // XXX: https://github.com/angular/angular/issues/6223
         this.loader.loadAsRoot(BusyBackdropComponent, '#' + id, this.injector)
             .then(componentRef => {
                 (<any>this.appRef)._loadComponent(componentRef);
@@ -118,12 +124,9 @@ export class BusyDirective implements OnInit, OnChanges {
     }
 
     private loadBusy() {
-        // this.loader.loadNextToLocation(BusyComponent, this.viewContainerRef)
-        //     .then(componentRef => this.busyRef = componentRef);
-
         const id = this.createWrapper('wrapper').id;
 
-        const options = this.options;
+        const options = this.optionsNorm;
         const BusyComponent = this.createBusyComponentClass(options.template)
 
         this.loader.loadAsRoot(BusyComponent, '#' + id, this.injector)
@@ -151,18 +154,38 @@ export class BusyDirective implements OnInit, OnChanges {
     }
 
     private createBusyComponentClass(template: string) {
+        const inactiveStyle = style({
+            opacity: 0,
+            transform: 'translateY(-40px)'
+        });
+        const timing = '.3s ease';
+
         @Component({
             selector: 'ng-busy',
             template: `
                 <div [class]="wrapperClass"
-                     [ngStyle]="{display: isActive() ? 'block' : 'none'}">
-                `
-                + template
-                + '</div>'
+                     @flyInOut
+                     *ngIf="isActive()">
+                    ${template}
+                </div>
+            `,
+            // TODO: provide customized animations
+            animations: [
+                trigger('flyInOut', [
+                    transition('void => *', [
+                        inactiveStyle,
+                        animate(timing)
+                    ]),
+                    transition('* => void', [
+                        animate(timing, inactiveStyle)
+                    ])
+                ])
+            ]
         })
         class BusyComponent {
             message: string;
             wrapperClass: string;
+            shown: boolean;
 
             constructor(private tracker: PromiseTrackerService) {
             }

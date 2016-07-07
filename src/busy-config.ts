@@ -25,10 +25,10 @@ export interface IBusyConfig {
     backdrop?: boolean;
     message?: string;
     wrapperClass?: string;
-    promise?: Promise<any> | Array<Promise<any>>
+    promise?: Promise<any> | Promise<any>[]
 }
 
-export const BUSY_CONFIG_DEFAULTS =  {
+export const BUSY_CONFIG_DEFAULTS = {
     template: `
         <div class="busy-default-wrapper">
             <div class="busy-default-sign">

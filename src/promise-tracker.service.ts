@@ -5,7 +5,7 @@
 
 // Inspired by angular-promise-tracker
 
-import {Injectable, IterableDiffers} from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class PromiseTrackerService {
@@ -14,11 +14,6 @@ export class PromiseTrackerService {
     durationPromise: number | any;
     delayJustFinished: boolean = false;
     minDuration: number;
-    differ: any;
-
-    constructor(private differs: IterableDiffers) {
-        this.differ = differs.find(this.promiseList).create(null);
-    }
 
     reset(options: IPromiseTrackerOptions) {
         this.minDuration = options.minDuration;
@@ -94,10 +89,6 @@ export class PromiseTrackerService {
             this.durationPromise = null;
         }
         return this.promiseList.length > 0;
-    }
-
-    equals(promises: Promise<any>[]) {
-        return !this.differ.diff(promises);
     }
 }
 
