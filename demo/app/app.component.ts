@@ -36,7 +36,5 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loading.promise = this.http.get('http://httpbin.org/delay/3')
-            .toPromise();
     }
 }

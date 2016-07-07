@@ -3,7 +3,7 @@
  * @author yumao<yuzhang.lille@gmail.com>
  */
 
-import {Component, Input, OnChanges, SimpleChange} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {BusyDirective, IBusyConfig} from '../../..';
 
@@ -13,9 +13,6 @@ import {BusyDirective, IBusyConfig} from '../../..';
     template: require('./table.component.html'),
     styles: [require('./table.component.less')]
 })
-export class TableComponent implements OnChanges {
+export class TableComponent {
     @Input() loading: IBusyConfig;
-
-    ngOnChanges(changes: {[propName: string]: SimpleChange}) {
-    }
 }

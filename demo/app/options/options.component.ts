@@ -26,8 +26,10 @@ export class OptionsComponent {
     }
 
     playDemo() {
-        let promise = this.http.get('http://httpbin.org/delay/3')
+        // let promise = this.http.get('http://httpbin.org/delay/3')
+        //     .toPromise();
+        // this.data = Object.assign({}, this.data, {promise: promise});
+        this.data.promise = this.http.get('http://httpbin.org/delay/3')
             .toPromise();
-        this.data = Object.assign({}, this.data, {promise: promise});
     }
 }
