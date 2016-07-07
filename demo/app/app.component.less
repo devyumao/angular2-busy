@@ -5,6 +5,30 @@
 
 @import "~style/variable.less";
 
-.table {
-    position: relative;
+.form-control {
+    &:focus {
+        border-color: @theme-color-light;
+    }
+}
+
+.c-input {
+    > input {
+        &:checked {
+            ~ .c-indicator {
+                background-color: @theme-color;
+            }
+        }
+
+        &:focus {
+            ~ .c-indicator {
+                box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem @theme-color;
+            }
+        }
+
+        &:active {
+            ~ .c-indicator {
+                background-color: @theme-color-light;
+            }
+        }
+    }
 }

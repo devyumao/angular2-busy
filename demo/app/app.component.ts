@@ -3,7 +3,7 @@
  * @author yumao<yuzhang.lille@gmail.com>
  */
 
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Http, HTTP_PROVIDERS} from '@angular/http';
 
 import {BusyService} from '../..';
@@ -14,6 +14,7 @@ import {TableComponent} from './table';
 
 @Component({
     selector: 'app',
+    encapsulation: ViewEncapsulation.None,
     providers: [Http, HTTP_PROVIDERS, BusyService],
     directives: [
         GithubCornerComponent,
