@@ -26,7 +26,7 @@ export class OptionsComponent {
     }
 
     playDemo() {
-        this.data.promise = this.http.get('http://httpbin.org/delay/3')
+        this.data.busy = this.http.get('http://httpbin.org/delay/3')
             .subscribe();
 
         // this.data.promise = this.http.get('http://httpbin.org/delay/3')

@@ -15,7 +15,7 @@ export interface IBusyConfig {
     backdrop?: boolean;
     message?: string;
     wrapperClass?: string;
-    promise?: Promise<any> | Subscription | Array<Promise<any> | Subscription>;
+    busy?: Promise<any> | Subscription | Array<Promise<any> | Subscription>;
 }
 export declare const BUSY_CONFIG_DEFAULTS: {
     template: string;

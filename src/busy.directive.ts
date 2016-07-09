@@ -55,14 +55,14 @@ export class BusyDirective implements DoCheck {
 
     private normalizeOptions(options: any) {
         if (!options) {
-            options = {promise: null};
+            options = {busy: null};
         }
         else if (Array.isArray(options)) {
-            options = {promise: options};
+            options = {busy: options};
         }
         options = Object.assign({}, this.service.config, options);
-        if (!Array.isArray(options.promise)) {
-            options.promise = [options.promise];
+        if (!Array.isArray(options.busy)) {
+            options.busy = [options.busy];
         }
 
         return options;
@@ -88,9 +88,9 @@ export class BusyDirective implements DoCheck {
             this.busyRef.instance.message = options.message;
         }
 
-        !equals(options.promise, this.tracker.promiseList)
+        !equals(options.busy, this.tracker.promiseList)
             && this.tracker.reset({
-                promiseList: options.promise,
+                promiseList: options.busy,
                 delay: options.delay,
                 minDuration: options.minDuration
             });
