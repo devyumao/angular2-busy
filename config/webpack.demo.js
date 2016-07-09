@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 var helper = require('./helper');
 
@@ -39,7 +40,7 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loader: 'raw!less'
+                loader: 'raw!postcss!less'
             },
             {
                 test: /\.html$/,
@@ -47,6 +48,10 @@ module.exports = {
             }
         ]
     },
+
+    postcss: [
+        autoprefixer()
+    ],
 
     plugins: [
         new ForkCheckerPlugin(),

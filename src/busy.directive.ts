@@ -19,6 +19,7 @@ import {
     transition,
     animate
 } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 
 import {equals} from './util';
 import {PromiseTrackerService} from './promise-tracker.service';
@@ -63,6 +64,7 @@ export class BusyDirective implements DoCheck {
         if (!Array.isArray(options.promise)) {
             options.promise = [options.promise];
         }
+
         return options;
     }
 
@@ -115,10 +117,7 @@ export class BusyDirective implements DoCheck {
         // XXX: https://github.com/angular/angular/issues/6223
         this.loader.loadAsRoot(BusyBackdropComponent, '#' + id, this.injector)
             .then(componentRef => {
-                (<any>this.appRef)._loadComponent(componentRef);
-                componentRef.onDestroy(() => {
-                    (<any>this.appRef)._unloadComponent(componentRef);
-                });
+                this.loadComponent(componentRef);
                 return this.backdropRef = componentRef;
             });
     }
@@ -133,15 +132,12 @@ export class BusyDirective implements DoCheck {
             .then(componentRef => {
                 componentRef.instance.message = options.message;
                 componentRef.instance.wrapperClass = options.wrapperClass;
-                (<any>this.appRef)._loadComponent(componentRef);
-                componentRef.onDestroy(() => {
-                    (<any>this.appRef)._unloadComponent(componentRef);
-                });
+                this.loadComponent(componentRef);
                 return this.busyRef = componentRef;
             });
     }
 
-    private createWrapper(name) {
+    private createWrapper(name: string) {
         if (!this.timestamp) {
             this.timestamp = new Date().getTime();
         }
@@ -151,6 +147,13 @@ export class BusyDirective implements DoCheck {
         this.el.appendChild(wrapper);
 
         return wrapper;
+    }
+
+    private loadComponent(ref: ComponentRef<any>) {
+        (<any>this.appRef)._loadComponent(ref);
+        ref.onDestroy(() => {
+            (<any>this.appRef)._unloadComponent(ref);
+        });
     }
 
     private createBusyComponentClass(template: string) {

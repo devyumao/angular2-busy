@@ -1,4 +1,5 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 var helper = require('./helper');
 
@@ -29,10 +30,14 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('raw!less')
+                loader: ExtractTextPlugin.extract('raw!postcss!less')
             }
         ]
     },
+
+    postcss: [
+        autoprefixer()
+    ],
 
     plugins: [
         new ExtractTextPlugin('style/[name].css')

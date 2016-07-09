@@ -4,12 +4,14 @@
  */
 
 // Inspired by angular-promise-tracker
+// Add Subscription
 
 import {Injectable} from '@angular/core';
+import {Subscription} from 'rxjs';
 
 @Injectable()
 export class PromiseTrackerService {
-    promiseList: Promise<any>[] = [];
+    promiseList: Array<Promise<any> | Subscription> = [];
     delayPromise: number | any;
     durationPromise: number | any;
     delayJustFinished: boolean = false;
@@ -50,20 +52,26 @@ export class PromiseTrackerService {
         }
     }
 
-    private addPromise(promise: Promise<any>) {
+    private addPromise(promise: Promise<any> | Subscription) {
         if (this.promiseList.indexOf(promise) !== -1) {
             return;
         }
 
         this.promiseList.push(promise);
-        promise.then.call(
-            promise,
-            () => this.finishPromise(promise),
-            () => this.finishPromise(promise)
-        );
+
+        if (promise instanceof Promise) {
+            promise.then.call(
+                promise,
+                () => this.finishPromise(promise),
+                () => this.finishPromise(promise)
+            );
+        }
+        else if (promise instanceof Subscription) {
+            promise.add(() => this.finishPromise(promise));
+        }
     }
 
-    private finishPromise(promise: Promise<any>) {
+    private finishPromise(promise: Promise<any> | Subscription) {
         promise['busyFulfilled'] = true;
         const index = this.promiseList.indexOf(promise);
         if (index === -1) {

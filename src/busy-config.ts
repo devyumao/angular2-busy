@@ -3,6 +3,8 @@
  * @author yumao<yuzhang.lille@gmail.com>
  */
 
+import {Subscription} from 'rxjs';
+
 export class BusyConfig implements IBusyConfig {
     template: string;
     delay: number;
@@ -25,14 +27,14 @@ export interface IBusyConfig {
     backdrop?: boolean;
     message?: string;
     wrapperClass?: string;
-    promise?: Promise<any> | Promise<any>[]
+    promise?: Promise<any> | Subscription | Array<Promise<any> | Subscription>
 }
 
 export const BUSY_CONFIG_DEFAULTS = {
     template: `
-        <div class="busy-default-wrapper">
-            <div class="busy-default-sign">
-                <div class="busy-default-spinner">
+        <div class="ng-busy-default-wrapper">
+            <div class="ng-busy-default-sign">
+                <div class="ng-busy-default-spinner">
                     <div class="bar1"></div>
                     <div class="bar2"></div>
                     <div class="bar3"></div>
@@ -46,7 +48,7 @@ export const BUSY_CONFIG_DEFAULTS = {
                     <div class="bar11"></div>
                     <div class="bar12"></div>
                 </div>
-                <div class="busy-default-text">{{message}}</div>
+                <div class="ng-busy-default-text">{{message}}</div>
             </div>
         </div>
     `,
@@ -54,5 +56,5 @@ export const BUSY_CONFIG_DEFAULTS = {
     minDuration: 0,
     backdrop: true,
     message: 'Please wait...',
-    wrapperClass: 'busy busy-animation'
+    wrapperClass: 'ng-busy'
 };
