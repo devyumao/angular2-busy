@@ -4,7 +4,7 @@
  */
 
 // Inspired by angular-promise-tracker
-// Add Subscription
+// Add Observable Subscription
 
 import {Injectable} from '@angular/core';
 import {Subscription} from 'rxjs';
