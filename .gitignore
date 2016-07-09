@@ -1,6 +1,7 @@
 # Node Files #
 /node_modules
 npm-debug.log
+.npmignore
 
 # OS generated files #
 .DS_Store

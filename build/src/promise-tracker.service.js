@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var rxjs_1 = require('rxjs');
 var PromiseTrackerService = (function () {
     function PromiseTrackerService() {
         this.promiseList = [];
@@ -19,7 +20,7 @@ var PromiseTrackerService = (function () {
         this.minDuration = options.minDuration;
         this.promiseList = [];
         options.promiseList.forEach(function (promise) {
-            if (!promise || promise.busyFulfilled) {
+            if (!promise || promise['busyFulfilled']) {
                 return;
             }
             _this.addPromise(promise);
@@ -37,7 +38,7 @@ var PromiseTrackerService = (function () {
         if (options.minDuration) {
             this.durationPromise = setTimeout(function () {
                 _this.durationPromise = null;
-            }, options.duration + (options.delay || 0));
+            }, options.minDuration + (options.delay || 0));
         }
     };
     PromiseTrackerService.prototype.addPromise = function (promise) {
@@ -46,10 +47,15 @@ var PromiseTrackerService = (function () {
             return;
         }
         this.promiseList.push(promise);
-        promise.then.call(promise, function () { return _this.finishPromise(promise); }, function () { return _this.finishPromise(promise); });
+        if (promise instanceof Promise) {
+            promise.then.call(promise, function () { return _this.finishPromise(promise); }, function () { return _this.finishPromise(promise); });
+        }
+        else if (promise instanceof rxjs_1.Subscription) {
+            promise.add(function () { return _this.finishPromise(promise); });
+        }
     };
     PromiseTrackerService.prototype.finishPromise = function (promise) {
-        Object.assign(promise, { busyFulfilled: true });
+        promise['busyFulfilled'] = true;
         var index = this.promiseList.indexOf(promise);
         if (index === -1) {
             return;

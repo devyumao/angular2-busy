@@ -1,7 +1,7 @@
 {
   "name": "angular2-busy",
-  "description": "Angular 2 Busy: show busy/loading indicators on any promise",
-  "version": "0.2.1",
+  "description": "Angular 2 Busy: show busy/loading indicators on any promise, or on any observable subscription",
+  "version": "0.2.3-rc.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devyumao/angular2-busy.git"
@@ -16,7 +16,7 @@
   ],
   "author": "Yumao",
   "license": "MIT",
-  "main": "index.ts",
+  "main": "index.js",
   "typings": "",
   "homepage": "https://github.com/devyumao/angular2-busy",
   "bugs": {
@@ -32,6 +32,8 @@
     "test": "NODE_ENV=test webpack --inline --progress --colors --watch --content-base test"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "@angular/common": "^2.0.0-rc.4",
     "@angular/compiler": "^2.0.0-rc.4",
     "@angular/core": "^2.0.0-rc.4",
@@ -44,9 +46,7 @@
     "core-js": "^2.4.0",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.0-beta.6",
-    "zone.js": "^0.6.12"
-  },
-  "devDependencies": {
+    "zone.js": "^0.6.12",
     "autoprefixer": "^6.3.7",
     "awesome-typescript-loader": "^0.19.1",
     "copy-webpack-plugin": "^3.0.1",

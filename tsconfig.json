@@ -5,13 +5,14 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "declaration": false,
+        "declaration": true,
         "outDir": "build"
     },
     "exclude": [
         "node_modules"
     ],
     "filesGlob": [
+        "./index.ts",
         "./src/**/*.ts",
         "./demo/**/*.ts",
         "!./node_modules/**/*.ts",
@@ -21,7 +22,7 @@
         "resolveGlobs": true,
         "forkChecker": true
     },
-    "compileOnSave": false,
+    "compileOnSave": true,
     "buildOnSave": false,
     "atom": {
         "rewriteTsconfig": false

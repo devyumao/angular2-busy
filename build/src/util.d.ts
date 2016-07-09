@@ -1,0 +1,6 @@
+export declare function isDate(value: any): boolean;
+export declare function isRegExp(value: any): boolean;
+export declare function isWindow(obj: any): boolean;
+export declare function isFunction(value: any): boolean;
+export declare function isDefined(value: any): boolean;
+export declare function equals(o1: any, o2: any): any;

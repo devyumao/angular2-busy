@@ -9,22 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var promise_tracker_service_1 = require('./promise-tracker.service');
+var inactiveStyle = core_1.style({
+    opacity: 0,
+});
+var timing = '.3s ease';
 var BusyBackdropComponent = (function () {
-    function BusyBackdropComponent() {
+    function BusyBackdropComponent(tracker) {
+        this.tracker = tracker;
     }
     BusyBackdropComponent.prototype.isActive = function () {
         return this.tracker.isActive();
     };
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', Object)
-    ], BusyBackdropComponent.prototype, "tracker", void 0);
     BusyBackdropComponent = __decorate([
         core_1.Component({
             selector: 'ng-busy-backdrop',
-            template: "\n        <div class=\"busy-backdrop busy-backdrop-animation\" [ngStyle]=\"{display: isActive() ? 'block' : 'none'}\"></div>\n    "
+            template: "\n        <div class=\"ng-busy-backdrop\"\n             @fadeInOut\n             *ngIf=\"isActive()\">\n        </div>\n    ",
+            animations: [
+                core_1.trigger('fadeInOut', [
+                    core_1.transition('void => *', [
+                        inactiveStyle,
+                        core_1.animate(timing)
+                    ]),
+                    core_1.transition('* => void', [
+                        core_1.animate(timing, inactiveStyle)
+                    ])
+                ])
+            ]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [promise_tracker_service_1.PromiseTrackerService])
     ], BusyBackdropComponent);
     return BusyBackdropComponent;
 }());

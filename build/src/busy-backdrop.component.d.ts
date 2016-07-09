@@ -1,5 +1,6 @@
+import { PromiseTrackerService } from './promise-tracker.service';
 export declare class BusyBackdropComponent {
-    tracker: any;
-    constructor();
-    isActive(): any;
+    private tracker;
+    constructor(tracker: PromiseTrackerService);
+    isActive(): boolean;
 }
