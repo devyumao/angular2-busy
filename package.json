@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/devyumao/angular2-busy.git"
   },
-  "keyword": [
+  "keywords": [
     "angular",
     "angular2",
     "busy",
@@ -28,7 +28,8 @@
     "build:busy": "npm run build",
     "watch:busy": "npm run watch",
     "build:demo": "NODE_ENV=demo webpack --progress",
-    "watch:demo": "NODE_ENV=demo webpack-dev-server --inline --progress --profile --colors --watch --display-error-details --display-cached --content-base demo/asset"
+    "watch:demo": "NODE_ENV=demo webpack-dev-server --inline --progress --profile --colors --watch --display-error-details --display-cached --content-base demo/asset",
+    "test": "NODE_ENV=test webpack --inline --progress --colors --watch --content-base test"
   },
   "dependencies": {
     "@angular/common": "^2.0.0-rc.4",
@@ -52,6 +53,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.19.0",
     "install": "^0.8.1",
+    "jasmine-core": "2.4.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "postcss-loader": "^0.9.1",
@@ -62,13 +64,5 @@
     "typings": "^0.8.1",
     "webpack": "^1.12.15",
     "webpack-dev-server": "^1.14.1"
-  },
-  "keywords": [
-    "angular",
-    "angular2",
-    "busy",
-    "loading",
-    "angular2-busy",
-    "ng2-busy"
-  ]
+  }
 }
