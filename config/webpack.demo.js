@@ -10,7 +10,7 @@ var autoprefixer = require('autoprefixer');
 var helper = require('./helper');
 
 module.exports = {
-    debug: false,
+    debug: true,
 
     context: helper.root('demo'),
 
@@ -82,24 +82,24 @@ module.exports = {
 
         // prod
 
-        new DedupePlugin(),
+        // new DedupePlugin(),
 
-        new UglifyJsPlugin({
-            beautify: false,
-            mangle: {
-                screw_ie8 : true,
-                keep_fnames: true
-            },
-            compress: {
-                screw_ie8: true
-            },
-            comments: false
-        }),
+        // new UglifyJsPlugin({
+        //     beautify: false,
+        //     mangle: {
+        //         screw_ie8 : true,
+        //         keep_fnames: true
+        //     },
+        //     compress: {
+        //         screw_ie8: true
+        //     },
+        //     comments: false
+        // }),
 
-        new CompressionPlugin({
-            regExp: /\.css$|\.html$|\.js$|\.map$/,
-            threshold: 2 * 1024
-        })
+        // new CompressionPlugin({
+        //     regExp: /\.css$|\.html$|\.js$|\.map$/,
+        //     threshold: 2 * 1024
+        // })
     ],
 
     devServer: {

@@ -26,10 +26,10 @@ export class OptionsComponent {
     }
 
     playDemo() {
-        this.data.busy = this.http.get('https://httpbin.org/delay/3')
-            .subscribe();
-
         // this.data.busy = this.http.get('https://httpbin.org/delay/3')
-        //     .toPromise();
+        //     .subscribe();
+
+        this.data.busy = this.http.get('https://httpbin.org/delay/1')
+            .toPromise();
     }
 }
