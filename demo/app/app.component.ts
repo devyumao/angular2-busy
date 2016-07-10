@@ -4,7 +4,6 @@
  */
 
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {Http, HTTP_PROVIDERS} from '@angular/http';
 
 import {BusyService} from '../..';
 import {GithubCornerComponent} from './github-corner';
@@ -15,7 +14,7 @@ import {TableComponent} from './table';
 @Component({
     selector: 'app',
     encapsulation: ViewEncapsulation.None,
-    providers: [Http, HTTP_PROVIDERS, BusyService],
+    providers: [BusyService],
     directives: [
         GithubCornerComponent,
         HeaderComponent,
@@ -30,7 +29,7 @@ export class AppComponent implements OnInit {
         promise: null
     }
 
-    constructor(private http: Http, private busyService: BusyService) {
+    constructor(private busyService: BusyService) {
         busyService.config = {
             message: 'Please wait...'
         };

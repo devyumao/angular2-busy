@@ -14,3 +14,5 @@ build/busy.js
 
 # docs
 README.md
+
+*.gz

@@ -4,7 +4,7 @@ var autoprefixer = require('autoprefixer');
 var helper = require('./helper');
 
 module.exports = {
-    debug: true,
+    debug: false,
 
     context: helper.root('src'),
 

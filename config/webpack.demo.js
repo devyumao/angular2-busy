@@ -2,12 +2,15 @@ var webpack = require('webpack');
 var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var DedupePlugin = webpack.optimize.DedupePlugin;
+var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+var CompressionPlugin = require('compression-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 
 var helper = require('./helper');
 
 module.exports = {
-    debug: true,
+    debug: false,
 
     context: helper.root('demo'),
 
@@ -75,7 +78,28 @@ module.exports = {
                 from: helper.root('build/style/busy.css'),
                 to: 'css/'
             }
-        ])
+        ]),
+
+        // prod
+
+        new DedupePlugin(),
+
+        new UglifyJsPlugin({
+            beautify: false,
+            mangle: {
+                screw_ie8 : true,
+                keep_fnames: true
+            },
+            compress: {
+                screw_ie8: true
+            },
+            comments: false
+        }),
+
+        new CompressionPlugin({
+            regExp: /\.css$|\.html$|\.js$|\.map$/,
+            threshold: 2 * 1024
+        })
     ],
 
     devServer: {

@@ -19,7 +19,6 @@ import {
     transition,
     animate
 } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 
 import {equals} from './util';
 import {PromiseTrackerService} from './promise-tracker.service';

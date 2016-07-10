@@ -5,7 +5,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "declaration": true,
+        "declaration": false,
         "outDir": "build"
     },
     "exclude": [
@@ -22,7 +22,7 @@
         "resolveGlobs": true,
         "forkChecker": true
     },
-    "compileOnSave": true,
+    "compileOnSave": false,
     "buildOnSave": false,
     "atom": {
         "rewriteTsconfig": false
