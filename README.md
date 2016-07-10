@@ -142,7 +142,7 @@ import {BusyService} from 'angular2-busy';
 class AppComponent {
     constructor(private busyService: BusyService) {
         busyService.config = {
-            message: 'Uploading...',
+            message: 'Don\'t panic!',
             backdrop: false,
             template: `
             	<div>{{message}}</div>
