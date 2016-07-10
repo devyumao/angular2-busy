@@ -1,4 +1,5 @@
-# Angular2-Busy
+# Angular2-Busy [![npm version](https://img.shields.io/npm/v/angular2-busy.svg?style=flat-square)](https://www.npmjs.com/package/angular2-busy)
+
 
 **Angular 2 Busy** can show busy/loading indicators on any promise, or on any  Observable's subscription.
 
@@ -122,7 +123,7 @@ In other words, you may use flexble syntax:
 
 ## Overriding Defaults
 
-The default values of options can be overriden by assigning your custom configuration to the `busyService.config`.
+The default values of options can be overriden by assigning your custom configuration to the `BusyService`.
 
 In your app's root component, you can do this:
 
