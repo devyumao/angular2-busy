@@ -4,7 +4,7 @@
 
 **Angular 2 Busy** can show busy/loading indicators on any promise, or on any  Observable's subscription.
 
-<img src="./screenshot/demo.gif" style="width: 630px;">
+![demo](https://github.com/devyumao/devyumao.github.io/blob/master/angular2-busy/img/demo.gif?raw=true)
 
 Rewritten from [angular-busy](https://github.com/cgross/angular-busy), and add some new features in terms of Angular 2.
 
