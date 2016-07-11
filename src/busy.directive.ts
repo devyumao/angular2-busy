@@ -19,6 +19,7 @@ import {
     transition,
     animate
 } from '@angular/core';
+import {Subscription} from 'rxjs';
 
 import {equals} from './util';
 import {PromiseTrackerService} from './promise-tracker.service';
@@ -56,7 +57,10 @@ export class BusyDirective implements DoCheck {
         if (!options) {
             options = {busy: null};
         }
-        else if (Array.isArray(options)) {
+        else if (Array.isArray(options)
+            || options instanceof Promise
+            || options instanceof Subscription
+        ) {
             options = {busy: options};
         }
         options = Object.assign({}, this.service.config, options);

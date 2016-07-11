@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var rxjs_1 = require('rxjs');
 var util_1 = require('./util');
 var promise_tracker_service_1 = require('./promise-tracker.service');
 var busy_service_1 = require('./busy.service');
@@ -27,7 +28,9 @@ var BusyDirective = (function () {
         if (!options) {
             options = { busy: null };
         }
-        else if (Array.isArray(options)) {
+        else if (Array.isArray(options)
+            || options instanceof Promise
+            || options instanceof rxjs_1.Subscription) {
             options = { busy: options };
         }
         options = Object.assign({}, this.service.config, options);
