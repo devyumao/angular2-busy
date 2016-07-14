@@ -1,3 +1,3 @@
-export * from './build/src';
+export * from './build/src/index';
 // for demo debug
-// export * from './src';
+// export * from './src/index';
