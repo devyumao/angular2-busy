@@ -6,11 +6,11 @@
 // from AngularJS
 
 export function isDate(value) {
-    return toString.call(value) === '[object Date]';
+    return Object.prototype.toString.call(value) === '[object Date]';
 }
 
 export function isRegExp(value) {
-    return toString.call(value) === '[object RegExp]';
+    return Object.prototype.toString.call(value) === '[object RegExp]';
 }
 
 export function isWindow(obj) {
