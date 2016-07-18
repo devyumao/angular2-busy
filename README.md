@@ -155,6 +155,12 @@ class AppComponent {
 }
 ```
 
+## FAQ
+
+### The indicator's position is not inside the `ngBusy` container
+
+You may add `position: relative` style to your `ngBusy` container.
+
 ## TODO
 
 - Provide custom animations for the indicator
