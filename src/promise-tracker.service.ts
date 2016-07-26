@@ -7,7 +7,7 @@
 // Add Observable Subscription
 
 import {Injectable} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 
 @Injectable()
 export class PromiseTrackerService {

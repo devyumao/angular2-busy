@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var rxjs_1 = require('rxjs');
+var Subscription_1 = require('rxjs/Subscription');
 var PromiseTrackerService = (function () {
     function PromiseTrackerService() {
         this.promiseList = [];
@@ -50,7 +50,7 @@ var PromiseTrackerService = (function () {
         if (promise instanceof Promise) {
             promise.then.call(promise, function () { return _this.finishPromise(promise); }, function () { return _this.finishPromise(promise); });
         }
-        else if (promise instanceof rxjs_1.Subscription) {
+        else if (promise instanceof Subscription_1.Subscription) {
             promise.add(function () { return _this.finishPromise(promise); });
         }
     };

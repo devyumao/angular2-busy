@@ -19,7 +19,7 @@ import {
     transition,
     animate
 } from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Subscription} from 'rxjs/Subscription';
 
 import {equals} from './util';
 import {PromiseTrackerService} from './promise-tracker.service';
