@@ -5,11 +5,11 @@
 
 import {Component, Input} from '@angular/core';
 
-import {BusyDirective, IBusyConfig} from '../../..';
+import {IBusyConfig} from '../../..';
+// import {IBusyConfig} from 'angular2-busy';
 
 @Component({
     selector: 'demo-table',
-    directives: [BusyDirective],
     template: require('./table.component.html'),
     styles: [require('./table.component.less')]
 })

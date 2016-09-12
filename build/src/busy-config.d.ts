@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 export declare class BusyConfig implements IBusyConfig {
     template: string;
     delay: number;

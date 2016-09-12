@@ -8,7 +8,7 @@
 
 Rewritten from [angular-busy](https://github.com/cgross/angular-busy), and add some new features in terms of Angular 2.
 
-#### Built with Angular 2 RC4
+#### Built with Angular 2 RC6
 
 ## Demo
 
@@ -28,28 +28,28 @@ npm install --save angular2-busy
 
 ## Getting Started
 
-Inject the `BusyService` into your app's root component:
+Import the `BusyModule` in your root application module:
 
 ```typescript
-import {Component} from '@angular/core';
-import {BusyService} from 'angular2-busy';
+import {NgModule} from '@angular/core';
+import {BusyModule} from 'angular2-busy';
 
-@Component({
-    selector: 'app',
-    providers: [BusyService],
-    // ...
+@NgModule({
+	imports: [
+    	// ...
+        BusyModule
+    ],
+	// ...
 })
-class AppComponent {
-    // ...
-}
+export class AppModule
 ```
+
 
 Reference your promise in the `ngBusy` directive:
 
 ```typescript
 import {Component, OnInit} from '@angular/core';
 import {Http} from '@angular/http';
-import {BusyDirective} from 'angular2-busy';
 
 @Component({
     selector: 'some',
@@ -126,33 +126,33 @@ In other words, you may use flexble syntax:
 
 ## Overriding Defaults
 
-The default values of options can be overriden by assigning your custom configuration to the `BusyService`.
+The default values of options can be overriden by configuring the provider of the `BusyModule`.
 
-In your app's root component, you can do this:
+In the root application module, you can do this:
 
 ```typescript
-import {Component} from '@angular/core';
-import {BusyService} from 'angular2-busy';
+import {NgModule} from '@angular/core';
+import {BusyModule, BusyConfig} from 'angular2-busy';
 
-@Component({
-    selector: 'app',
-    providers: [BusyService],
-    // ...
+@NgModule({
+	imports: [
+    	// ...
+        BusyModule.forRoot(
+        	new BusyConfig({
+            	message: 'Don\'t panic!',
+                backdrop: false,
+                template: `
+                    <div>{{message}}</div>
+                `,
+                delay: 200,
+                minDuration: 600,
+                wrapperClass: 'my-class'
+            })
+        )
+    ],
+	// ...
 })
-class AppComponent {
-    constructor(private busyService: BusyService) {
-        busyService.config = {
-            message: 'Don\'t panic!',
-            backdrop: false,
-            template: `
-            	<div>{{message}}</div>
-            `,
-            delay: 200,
-            minDuration: 600,
-            wrapperClass: 'my-class'
-        };
-    }
-}
+export class AppModule
 ```
 
 ## FAQ

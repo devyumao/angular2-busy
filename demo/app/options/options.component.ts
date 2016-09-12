@@ -7,6 +7,7 @@ import {Component, Input} from '@angular/core';
 import {Http} from '@angular/http';
 
 import {BUSY_CONFIG_DEFAULTS, IBusyConfig} from '../../..';
+// import {BUSY_CONFIG_DEFAULTS, IBusyConfig} from 'angular2-busy';
 import {OPTIONS_TEMPLATE} from './options-template';
 
 @Component({

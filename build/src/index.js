@@ -5,4 +5,5 @@ function __export(m) {
 __export(require('./busy.directive'));
 __export(require('./busy.service'));
 __export(require('./busy-config'));
+__export(require('./busy.module'));
 //# sourceMappingURL=index.js.map

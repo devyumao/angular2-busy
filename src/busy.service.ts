@@ -3,19 +3,15 @@
  * @author yumao<yuzhang.lille@gmail.com>
  */
 
-import {Injectable} from '@angular/core';
+import {Injectable, Optional} from '@angular/core';
 
-import {BusyConfig, IBusyConfig} from './busy-config';
+import {BusyConfig} from './busy-config';
 
 @Injectable()
 export class BusyService {
-    private configValue: IBusyConfig = new BusyConfig();
+    config: BusyConfig;
 
-    set config(config: IBusyConfig) {
-        this.configValue = new BusyConfig(config);
-    }
-
-    get config() {
-        return this.configValue;
+    constructor(@Optional() config: BusyConfig) {
+        this.config = config || new BusyConfig();
     }
 }

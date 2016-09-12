@@ -1,5 +1,5 @@
-import { IBusyConfig } from './busy-config';
+import { BusyConfig } from './busy-config';
 export declare class BusyService {
-    private configValue;
-    config: IBusyConfig;
+    config: BusyConfig;
+    constructor(config: BusyConfig);
 }

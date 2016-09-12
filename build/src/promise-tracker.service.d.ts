@@ -1,4 +1,4 @@
-import { Subscription } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 export declare class PromiseTrackerService {
     promiseList: Array<Promise<any> | Subscription>;
     delayPromise: number | any;

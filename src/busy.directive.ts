@@ -7,12 +7,11 @@ import {
     Directive,
     Component,
     Input,
-    ElementRef,
     DoCheck,
-    DynamicComponentLoader,
+    ViewContainerRef,
+    ComponentFactoryResolver,
     ComponentRef,
     Injector,
-    ApplicationRef,
     trigger,
     state,
     style,
@@ -25,6 +24,7 @@ import {equals} from './util';
 import {PromiseTrackerService} from './promise-tracker.service';
 import {BusyService} from './busy.service';
 import {IBusyConfig} from './busy-config';
+import {BusyComponent} from './busy.component';
 import {BusyBackdropComponent} from './busy-backdrop.component';
 
 @Directive({
@@ -35,22 +35,18 @@ export class BusyDirective implements DoCheck {
     @Input('ngBusy') options: any;
     private optionsRecord: any;
     private optionsNorm: IBusyConfig;
-    timestamp: number;
-    el: HTMLElement;
     template: string;
     backdrop: boolean;
-    private busyRef: ComponentRef<any>;
+    private busyRef: ComponentRef<BusyComponent>;
     private backdropRef: ComponentRef<BusyBackdropComponent>;
 
     constructor(
-        private elRef: ElementRef,
         private service: BusyService,
         private tracker: PromiseTrackerService,
-        private loader: DynamicComponentLoader,
-        private injector: Injector,
-        private appRef: ApplicationRef
+        private cfResolver: ComponentFactoryResolver,
+        private vcRef: ViewContainerRef,
+        private injector: Injector
     ) {
-        this.el = elRef.nativeElement;
     }
 
     private normalizeOptions(options: any) {
@@ -102,105 +98,41 @@ export class BusyDirective implements DoCheck {
             || this.template !== options.template
             || this.backdrop !== options.backdrop
         ) {
-            this.busyRef && this.busyRef.destroy();
-            this.backdropRef && this.backdropRef.destroy();
+            this.destroyComponents();
 
             this.template = options.template;
             this.backdrop = options.backdrop;
 
-            options.backdrop && this.loadBackdrop();
+            options.backdrop && this.createBackdrop();
 
-            this.loadBusy();
+            this.createBusy();
         }
     }
 
-    private loadBackdrop() {
-        const id = this.createWrapper('backdrop-wrapper').id;
-
-        // XXX: https://github.com/angular/angular/issues/6223
-        this.loader.loadAsRoot(BusyBackdropComponent, '#' + id, this.injector)
-            .then(componentRef => {
-                this.loadComponent(componentRef);
-                return this.backdropRef = componentRef;
-            });
+    ngOnDestroy() {
+        this.destroyComponents();
     }
 
-    private loadBusy() {
-        const id = this.createWrapper('wrapper').id;
-
-        const options = this.optionsNorm;
-        const BusyComponent = this.createBusyComponentClass(options.template)
-
-        this.loader.loadAsRoot(BusyComponent, '#' + id, this.injector)
-            .then(componentRef => {
-                componentRef.instance.message = options.message;
-                componentRef.instance.wrapperClass = options.wrapperClass;
-                this.loadComponent(componentRef);
-                return this.busyRef = componentRef;
-            });
+    private destroyComponents() {
+        this.busyRef && this.busyRef.destroy();
+        this.backdropRef && this.backdropRef.destroy();
     }
 
-    private createWrapper(name: string) {
-        if (!this.timestamp) {
-            this.timestamp = new Date().getTime();
-        }
-
-        let wrapper = document.createElement('div');
-        wrapper.id = ['busy', name, this.timestamp].join('-');
-        this.el.appendChild(wrapper);
-
-        return wrapper;
+    private createBackdrop() {
+        const backdropFactory = this.cfResolver.resolveComponentFactory(BusyBackdropComponent);
+        this.backdropRef = this.vcRef.createComponent(backdropFactory, null, this.injector);
     }
 
-    private loadComponent(ref: ComponentRef<any>) {
-        (<any>this.appRef)._loadComponent(ref);
-        ref.onDestroy(() => {
-            (<any>this.appRef)._unloadComponent(ref);
-        });
-    }
+    private createBusy() {
+        const busyFactory = this.cfResolver.resolveComponentFactory(BusyComponent);
+        this.busyRef = this.vcRef.createComponent(busyFactory, null, this.injector);
 
-    private createBusyComponentClass(template: string) {
-        const inactiveStyle = style({
-            opacity: 0,
-            transform: 'translateY(-40px)'
-        });
-        const timing = '.3s ease';
-
-        @Component({
-            selector: 'ng-busy',
-            template: `
-                <div [class]="wrapperClass"
-                     @flyInOut
-                     *ngIf="isActive()">
-                    ${template}
-                </div>
-            `,
-            // TODO: provide customized animations
-            animations: [
-                trigger('flyInOut', [
-                    transition('void => *', [
-                        inactiveStyle,
-                        animate(timing)
-                    ]),
-                    transition('* => void', [
-                        animate(timing, inactiveStyle)
-                    ])
-                ])
-            ]
-        })
-        class BusyComponent {
-            message: string;
-            wrapperClass: string;
-            shown: boolean;
-
-            constructor(private tracker: PromiseTrackerService) {
-            }
-
-            isActive() {
-                return this.tracker.isActive();
-            }
-        }
-
-        return BusyComponent;
+        const {message, wrapperClass, template} = this.optionsNorm;
+        let instance = this.busyRef.instance;
+        Object.assign.call(
+            instance,
+            instance,
+            {message, wrapperClass, template}
+        )
     }
 }

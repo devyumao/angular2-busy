@@ -13,16 +13,15 @@ var Subscription_1 = require('rxjs/Subscription');
 var util_1 = require('./util');
 var promise_tracker_service_1 = require('./promise-tracker.service');
 var busy_service_1 = require('./busy.service');
+var busy_component_1 = require('./busy.component');
 var busy_backdrop_component_1 = require('./busy-backdrop.component');
 var BusyDirective = (function () {
-    function BusyDirective(elRef, service, tracker, loader, injector, appRef) {
-        this.elRef = elRef;
+    function BusyDirective(service, tracker, cfResolver, vcRef, injector) {
         this.service = service;
         this.tracker = tracker;
-        this.loader = loader;
+        this.cfResolver = cfResolver;
+        this.vcRef = vcRef;
         this.injector = injector;
-        this.appRef = appRef;
-        this.el = elRef.nativeElement;
     }
     BusyDirective.prototype.normalizeOptions = function (options) {
         if (!options) {
@@ -63,86 +62,30 @@ var BusyDirective = (function () {
         if (!this.busyRef
             || this.template !== options.template
             || this.backdrop !== options.backdrop) {
-            this.busyRef && this.busyRef.destroy();
-            this.backdropRef && this.backdropRef.destroy();
+            this.destroyComponents();
             this.template = options.template;
             this.backdrop = options.backdrop;
-            options.backdrop && this.loadBackdrop();
-            this.loadBusy();
+            options.backdrop && this.createBackdrop();
+            this.createBusy();
         }
     };
-    BusyDirective.prototype.loadBackdrop = function () {
-        var _this = this;
-        var id = this.createWrapper('backdrop-wrapper').id;
-        this.loader.loadAsRoot(busy_backdrop_component_1.BusyBackdropComponent, '#' + id, this.injector)
-            .then(function (componentRef) {
-            _this.loadComponent(componentRef);
-            return _this.backdropRef = componentRef;
-        });
+    BusyDirective.prototype.ngOnDestroy = function () {
+        this.destroyComponents();
     };
-    BusyDirective.prototype.loadBusy = function () {
-        var _this = this;
-        var id = this.createWrapper('wrapper').id;
-        var options = this.optionsNorm;
-        var BusyComponent = this.createBusyComponentClass(options.template);
-        this.loader.loadAsRoot(BusyComponent, '#' + id, this.injector)
-            .then(function (componentRef) {
-            componentRef.instance.message = options.message;
-            componentRef.instance.wrapperClass = options.wrapperClass;
-            _this.loadComponent(componentRef);
-            return _this.busyRef = componentRef;
-        });
+    BusyDirective.prototype.destroyComponents = function () {
+        this.busyRef && this.busyRef.destroy();
+        this.backdropRef && this.backdropRef.destroy();
     };
-    BusyDirective.prototype.createWrapper = function (name) {
-        if (!this.timestamp) {
-            this.timestamp = new Date().getTime();
-        }
-        var wrapper = document.createElement('div');
-        wrapper.id = ['busy', name, this.timestamp].join('-');
-        this.el.appendChild(wrapper);
-        return wrapper;
+    BusyDirective.prototype.createBackdrop = function () {
+        var backdropFactory = this.cfResolver.resolveComponentFactory(busy_backdrop_component_1.BusyBackdropComponent);
+        this.backdropRef = this.vcRef.createComponent(backdropFactory, null, this.injector);
     };
-    BusyDirective.prototype.loadComponent = function (ref) {
-        var _this = this;
-        this.appRef._loadComponent(ref);
-        ref.onDestroy(function () {
-            _this.appRef._unloadComponent(ref);
-        });
-    };
-    BusyDirective.prototype.createBusyComponentClass = function (template) {
-        var inactiveStyle = core_1.style({
-            opacity: 0,
-            transform: 'translateY(-40px)'
-        });
-        var timing = '.3s ease';
-        var BusyComponent = (function () {
-            function BusyComponent(tracker) {
-                this.tracker = tracker;
-            }
-            BusyComponent.prototype.isActive = function () {
-                return this.tracker.isActive();
-            };
-            BusyComponent = __decorate([
-                core_1.Component({
-                    selector: 'ng-busy',
-                    template: "\n                <div [class]=\"wrapperClass\"\n                     @flyInOut\n                     *ngIf=\"isActive()\">\n                    " + template + "\n                </div>\n            ",
-                    animations: [
-                        core_1.trigger('flyInOut', [
-                            core_1.transition('void => *', [
-                                inactiveStyle,
-                                core_1.animate(timing)
-                            ]),
-                            core_1.transition('* => void', [
-                                core_1.animate(timing, inactiveStyle)
-                            ])
-                        ])
-                    ]
-                }), 
-                __metadata('design:paramtypes', [promise_tracker_service_1.PromiseTrackerService])
-            ], BusyComponent);
-            return BusyComponent;
-        }());
-        return BusyComponent;
+    BusyDirective.prototype.createBusy = function () {
+        var busyFactory = this.cfResolver.resolveComponentFactory(busy_component_1.BusyComponent);
+        this.busyRef = this.vcRef.createComponent(busyFactory, null, this.injector);
+        var _a = this.optionsNorm, message = _a.message, wrapperClass = _a.wrapperClass, template = _a.template;
+        var instance = this.busyRef.instance;
+        Object.assign.call(instance, instance, { message: message, wrapperClass: wrapperClass, template: template });
     };
     __decorate([
         core_1.Input('ngBusy'), 
@@ -153,7 +96,7 @@ var BusyDirective = (function () {
             selector: '[ngBusy]',
             providers: [promise_tracker_service_1.PromiseTrackerService]
         }), 
-        __metadata('design:paramtypes', [core_1.ElementRef, busy_service_1.BusyService, promise_tracker_service_1.PromiseTrackerService, core_1.DynamicComponentLoader, core_1.Injector, core_1.ApplicationRef])
+        __metadata('design:paramtypes', [busy_service_1.BusyService, promise_tracker_service_1.PromiseTrackerService, core_1.ComponentFactoryResolver, core_1.ViewContainerRef, core_1.Injector])
     ], BusyDirective);
     return BusyDirective;
 }());
