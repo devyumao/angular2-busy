@@ -12,7 +12,7 @@ Rewritten from [angular-busy](https://github.com/cgross/angular-busy), and add s
 
 ## Demo
 
-[devyumao.github.io/angular2-busy/demo](https://devyumao.github.io/angular2-busy/demo/)
+[devyumao.github.io/angular2-busy/demo/asset/](http://devyumao.github.io/angular2-busy/demo/asset/)
 
 ## Installation
 
