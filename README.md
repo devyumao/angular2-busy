@@ -2,13 +2,13 @@
 
 [![npm version](https://img.shields.io/npm/v/angular2-busy.svg?style=flat-square)](https://www.npmjs.com/package/angular2-busy) [![Build Status](https://img.shields.io/travis/devyumao/angular2-busy/master.svg?style=flat-square)](https://travis-ci.org/devyumao/angular2-busy)
 
-**Angular 2 Busy** can show busy/loading indicators on any promise, or on any  Observable's subscription.
+**Angular 2 Busy** can show busy/loading indicators on any promise, or on any Observable's subscription.
 
 ![demo](https://raw.githubusercontent.com/devyumao/devyumao.github.io/master/angular2-busy/img/demo.gif)
 
 Rewritten from [angular-busy](https://github.com/cgross/angular-busy), and add some new features in terms of Angular 2.
 
-### Built with Angular 2 RC6
+### Built with Angular 2.0.0
 
 ## Demo
 
