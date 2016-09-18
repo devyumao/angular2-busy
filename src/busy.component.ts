@@ -6,7 +6,6 @@
 import {
     Component,
     DoCheck,
-    Input,
     trigger,
     state,
     style,
@@ -43,6 +42,7 @@ const timing = '.3s ease';
 })
 export class BusyComponent implements DoCheck {
     message: string;
+    prevMessage: string;
     wrapperClass: string;
     template: string;
     safeTemplate: SafeHtml;
@@ -54,7 +54,7 @@ export class BusyComponent implements DoCheck {
     }
 
     ngDoCheck() {
-        if (!this.template) {
+        if (!this.template || this.message === this.prevMessage) {
             return;
         }
 
@@ -62,6 +62,8 @@ export class BusyComponent implements DoCheck {
             // XXX: fake dynamic template
             this.template.replace('{{message}}', this.message)
         );
+
+        this.prevMessage = this.message;
     }
 
     isActive() {
