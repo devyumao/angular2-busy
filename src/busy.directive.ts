@@ -11,12 +11,7 @@ import {
     ViewContainerRef,
     ComponentFactoryResolver,
     ComponentRef,
-    Injector,
-    trigger,
-    state,
-    style,
-    transition,
-    animate
+    Injector
 } from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 
