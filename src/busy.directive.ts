@@ -62,7 +62,7 @@ export class BusyDirective implements DoCheck {
         return options;
     }
 
-    dectectOptionsChange() {
+    private dectectOptionsChange() {
         if (equals(this.optionsNorm, this.optionsRecord)) {
             return false;
         }
