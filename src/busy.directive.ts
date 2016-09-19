@@ -22,6 +22,13 @@ import {IBusyConfig} from './busy-config';
 import {BusyComponent} from './busy.component';
 import {BusyBackdropComponent} from './busy-backdrop.component';
 
+/**
+ * ### Syntax
+ *
+ * - `<div [ngBusy]="busy">...</div>`
+ * - `<div [ngBusy]="[busyA, busyB, busyC]">...</div>`
+ * - `<div [ngBusy]="{busy: busy, message: 'Loading...', backdrop: false, delay: 200, minDuration: 600}">...</div>`
+ */
 @Directive({
     selector: '[ngBusy]',
     providers: [PromiseTrackerService]
