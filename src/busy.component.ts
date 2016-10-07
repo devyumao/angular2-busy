@@ -5,16 +5,15 @@
 
 import {
     Component,
-    DoCheck,
     trigger,
     state,
     style,
     transition,
     animate
 } from '@angular/core';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 import {PromiseTrackerService} from './promise-tracker.service';
+
 
 const inactiveStyle = style({
     opacity: 0,
@@ -22,10 +21,16 @@ const inactiveStyle = style({
 });
 const timing = '.3s ease';
 
+export interface IBusyContext {
+    message: string;
+};
+
 @Component({
     selector: 'ng-busy',
     template: `
-        <div *ngIf="isActive()" [class]="wrapperClass" [innerHTML]="safeTemplate" @flyInOut>
+        <div [class]="wrapperClass" *ngIf="isActive()" @flyInOut>
+            <DynamicComponent [componentTemplate]="template" [componentInputData]="context">
+            </DynamicComponent>
         </div>
     `,
     animations: [
@@ -40,30 +45,15 @@ const timing = '.3s ease';
         ])
     ]
 })
-export class BusyComponent implements DoCheck {
+export class BusyComponent {
     message: string;
-    prevMessage: string;
     wrapperClass: string;
     template: string;
-    safeTemplate: SafeHtml;
+    context: IBusyContext = {
+        message: null
+    };
 
-    constructor(
-        private tracker: PromiseTrackerService,
-        private sanitizer: DomSanitizer
-    ) {
-    }
-
-    ngDoCheck() {
-        if (!this.template || this.message === this.prevMessage) {
-            return;
-        }
-
-        this.safeTemplate = this.sanitizer.bypassSecurityTrustHtml(
-            // XXX: fake dynamic template
-            this.template.replace('{{message}}', this.message)
-        );
-
-        this.prevMessage = this.message;
+    constructor(private tracker: PromiseTrackerService) {
     }
 
     isActive() {

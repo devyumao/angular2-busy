@@ -86,7 +86,7 @@ export class BusyDirective implements DoCheck {
         }
 
         if (this.busyRef) {
-            this.busyRef.instance.message = options.message;
+            this.busyRef.instance.context.message = options.message;
         }
 
         !equals(options.busy, this.tracker.promiseList)
@@ -131,10 +131,8 @@ export class BusyDirective implements DoCheck {
 
         const {message, wrapperClass, template} = this.optionsNorm;
         let instance = this.busyRef.instance;
-        Object.assign.call(
-            instance,
-            instance,
-            {message, wrapperClass, template}
-        )
+        instance.context.message = message;
+        instance.wrapperClass = wrapperClass;
+        instance.template = template;
     }
 }

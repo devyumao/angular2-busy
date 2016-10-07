@@ -1,14 +1,13 @@
-import { DoCheck } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PromiseTrackerService } from './promise-tracker.service';
-export declare class BusyComponent implements DoCheck {
+export interface IBusyContext {
+    message: string;
+}
+export declare class BusyComponent {
     private tracker;
-    private sanitizer;
     message: string;
     wrapperClass: string;
     template: string;
-    safeTemplate: SafeHtml;
-    constructor(tracker: PromiseTrackerService, sanitizer: DomSanitizer);
-    ngDoCheck(): void;
+    context: IBusyContext;
+    constructor(tracker: PromiseTrackerService);
     isActive(): boolean;
 }

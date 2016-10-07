@@ -6,6 +6,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModuleWithProviders} from '@angular/core';
+import {DynamicComponentModule} from 'angular2-dynamic-component/index';
 
 import {BusyDirective} from './busy.directive';
 import {BusyService} from './busy.service';
@@ -14,7 +15,10 @@ import {BusyComponent} from './busy.component';
 import {BusyConfig} from './busy-config';
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [
+        CommonModule,
+        DynamicComponentModule
+    ],
     declarations: [
         BusyDirective,
         BusyComponent,

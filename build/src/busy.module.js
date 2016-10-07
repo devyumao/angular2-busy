@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
+var index_1 = require('angular2-dynamic-component/index');
 var busy_directive_1 = require('./busy.directive');
 var busy_service_1 = require('./busy.service');
 var busy_backdrop_component_1 = require('./busy-backdrop.component');
@@ -28,7 +29,10 @@ var BusyModule = (function () {
     };
     BusyModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule],
+            imports: [
+                common_1.CommonModule,
+                index_1.DynamicComponentModule
+            ],
             declarations: [
                 busy_directive_1.BusyDirective,
                 busy_component_1.BusyComponent,

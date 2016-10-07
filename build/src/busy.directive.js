@@ -51,7 +51,7 @@ var BusyDirective = (function () {
             return;
         }
         if (this.busyRef) {
-            this.busyRef.instance.message = options.message;
+            this.busyRef.instance.context.message = options.message;
         }
         !util_1.equals(options.busy, this.tracker.promiseList)
             && this.tracker.reset({
@@ -85,7 +85,9 @@ var BusyDirective = (function () {
         this.busyRef = this.vcRef.createComponent(busyFactory, null, this.injector);
         var _a = this.optionsNorm, message = _a.message, wrapperClass = _a.wrapperClass, template = _a.template;
         var instance = this.busyRef.instance;
-        Object.assign.call(instance, instance, { message: message, wrapperClass: wrapperClass, template: template });
+        instance.context.message = message;
+        instance.wrapperClass = wrapperClass;
+        instance.template = template;
     };
     __decorate([
         core_1.Input('ngBusy'), 

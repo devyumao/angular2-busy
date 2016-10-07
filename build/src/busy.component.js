@@ -9,31 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
 var promise_tracker_service_1 = require('./promise-tracker.service');
 var inactiveStyle = core_1.style({
     opacity: 0,
     transform: 'translateY(-40px)'
 });
 var timing = '.3s ease';
+;
 var BusyComponent = (function () {
-    function BusyComponent(tracker, sanitizer) {
+    function BusyComponent(tracker) {
         this.tracker = tracker;
-        this.sanitizer = sanitizer;
+        this.context = {
+            message: null
+        };
     }
-    BusyComponent.prototype.ngDoCheck = function () {
-        if (!this.template) {
-            return;
-        }
-        this.safeTemplate = this.sanitizer.bypassSecurityTrustHtml(this.template.replace('{{message}}', this.message));
-    };
     BusyComponent.prototype.isActive = function () {
         return this.tracker.isActive();
     };
     BusyComponent = __decorate([
         core_1.Component({
             selector: 'ng-busy',
-            template: "\n        <div *ngIf=\"isActive()\" [class]=\"wrapperClass\" [innerHTML]=\"safeTemplate\" @flyInOut>\n        </div>\n    ",
+            template: "\n        <div [class]=\"wrapperClass\" *ngIf=\"isActive()\" @flyInOut>\n            <DynamicComponent [componentTemplate]=\"template\" [componentInputData]=\"context\">\n            </DynamicComponent>\n        </div>\n    ",
             animations: [
                 core_1.trigger('flyInOut', [
                     core_1.transition('void => *', [
@@ -46,7 +42,7 @@ var BusyComponent = (function () {
                 ])
             ]
         }), 
-        __metadata('design:paramtypes', [promise_tracker_service_1.PromiseTrackerService, platform_browser_1.DomSanitizer])
+        __metadata('design:paramtypes', [promise_tracker_service_1.PromiseTrackerService])
     ], BusyComponent);
     return BusyComponent;
 }());
