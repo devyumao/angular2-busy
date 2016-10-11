@@ -174,7 +174,7 @@ You may need this in your `systemjs.config.js`:
         // ...
         'ts-metadata-helper': 'npm:ts-metadata-helper',
         'angular2-dynamic-component': 'npm:angular2-dynamic-component',
-        'angular2-busy': 'npm:angular2-busy',
+        'angular2-busy': 'npm:angular2-busy'
     },
     packages: {
         // ...
