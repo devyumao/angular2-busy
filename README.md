@@ -161,6 +161,38 @@ export class AppModule
 
 You may add `position: relative` style to your `ngBusy` container.
 
+### SystemJS Config?
+
+You may need this in your `systemjs.config.js`:
+
+```javascript
+{
+    paths: {
+        'npm:': 'node_modules/'
+    },
+    map: {
+        // ...
+        'ts-metadata-helper': 'npm:ts-metadata-helper',
+        'angular2-dynamic-component': 'npm:angular2-dynamic-component',
+        'angular2-busy': 'npm:angular2-busy',
+    },
+    packages: {
+        // ...
+        'ts-metadata-helper': {
+            defaultExtension: 'js'
+        },
+        'angular2-dynamic-component': {
+            defaultExtension: 'js'
+        },
+        'angular2-busy': {
+            main: './index.js',
+            defaultExtension: 'js'
+        }
+    }
+}
+```
+
+
 ## TODO
 
 - Provide custom animations for the indicator
