@@ -41,7 +41,7 @@ import {BusyModule} from 'angular2-busy';
     ],
 	// ...
 })
-export class AppModule
+export class AppModule {}
 ```
 
 
