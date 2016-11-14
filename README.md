@@ -94,7 +94,7 @@ The `ngBusy` directive expects a ***busy thing***, which means:
 - Or an array of them
 - Or a configuration object
 
-In other words, you may use flexble syntax:
+In other words, you may use flexible syntax:
 
 ```html
 <!-- Simple syntax -->
