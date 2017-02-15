@@ -1,7 +1,5 @@
 import {
-    it,
     inject,
-    beforeEachProviders
 } from '@angular/core/testing';
 
 import {BusyDirective} from '..';
