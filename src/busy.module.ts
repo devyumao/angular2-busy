@@ -7,7 +7,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ModuleWithProviders} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {DynamicComponentModule} from 'angular2-dynamic-component/index';
 
 import {BusyDirective} from './busy.directive';
 import {BusyService} from './busy.service';
@@ -18,7 +17,6 @@ import {BusyConfig} from './busy-config';
 @NgModule({
     imports: [
         CommonModule,
-        DynamicComponentModule,
         BrowserAnimationsModule
     ],
     declarations: [

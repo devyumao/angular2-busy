@@ -79,14 +79,14 @@ export class BusyDirective implements DoCheck {
 
     // As ngOnChanges does not work on Object detection, ngDoCheck is using
     ngDoCheck() {
-        let options = this.optionsNorm = this.normalizeOptions(this.options);
+        const options = this.optionsNorm = this.normalizeOptions(this.options);
 
         if (!this.dectectOptionsChange()) {
             return;
         }
 
         if (this.busyRef) {
-            this.busyRef.instance.context.message = options.message;
+            this.busyRef.instance.message = options.message;
         }
 
         !equals(options.busy, this.tracker.promiseList)
@@ -130,8 +130,8 @@ export class BusyDirective implements DoCheck {
         this.busyRef = this.vcRef.createComponent(busyFactory, null, this.injector);
 
         const {message, wrapperClass, template} = this.optionsNorm;
-        let instance = this.busyRef.instance;
-        instance.context.message = message;
+        const instance = this.busyRef.instance;
+        instance.message = message;
         instance.wrapperClass = wrapperClass;
         instance.template = template;
     }

@@ -3,7 +3,7 @@
  * @author yumao<yuzhang.lille@gmail.com>
  */
 
-import {Component} from '@angular/core';
+import {Component, Compiler, NgModule, NgModuleFactory, Injectable, DoCheck} from '@angular/core';
 import {trigger, state, style, transition, animate} from '@angular/animations';
 
 import {PromiseTrackerService} from './promise-tracker.service';
@@ -23,8 +23,7 @@ export interface IBusyContext {
     selector: 'ng-busy',
     template: `
         <div [class]="wrapperClass" *ngIf="isActive()" @flyInOut>
-            <DynamicComponent [componentTemplate]="template" [componentContext]="context">
-            </DynamicComponent>
+            <ng-container *ngComponentOutlet="TemplateComponent; ngModuleFactory: nmf;"></ng-container>
         </div>
     `,
     animations: [
@@ -39,15 +38,43 @@ export interface IBusyContext {
         ])
     ]
 })
-export class BusyComponent {
-    message: string;
+export class BusyComponent implements DoCheck {
+    TemplateComponent;
+    private nmf: NgModuleFactory<any>;
     wrapperClass: string;
     template: string;
-    context: IBusyContext = {
-        message: null
-    };
+    message: string;
+    private lastMessage: string;
 
-    constructor(private tracker: PromiseTrackerService) {
+    constructor(
+        private tracker: PromiseTrackerService,
+        private compiler: Compiler
+    ) {}
+
+    ngDoCheck() {
+        if (this.message === this.lastMessage) {
+            return;
+        }
+        this.lastMessage = this.message;
+        this.createDynamicTemplate();
+    }
+
+    createDynamicTemplate() {
+        const {template, message} = this;
+
+        @Component({template})
+        class TemplateComponent {
+            message: string = message;
+        }
+
+        @NgModule({
+            declarations: [TemplateComponent],
+            entryComponents: [TemplateComponent]
+        })
+        class TemplateModule {}
+
+        this.TemplateComponent = TemplateComponent;
+        this.nmf = this.compiler.compileModuleSync(TemplateModule);
     }
 
     isActive() {
