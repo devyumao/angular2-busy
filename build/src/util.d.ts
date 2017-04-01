@@ -1,3 +1,7 @@
+/**
+ * @file Util
+ * @author yumao<yuzhang.lille@gmail.com>
+ */
 export declare function isDate(value: any): boolean;
 export declare function isRegExp(value: any): boolean;
 export declare function isWindow(obj: any): boolean;

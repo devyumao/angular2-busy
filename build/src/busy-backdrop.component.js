@@ -1,3 +1,7 @@
+/**
+ * @file Component: BusyBackdrop
+ * @author yumao<yuzhang.lille@gmail.com>
+ */
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -8,9 +12,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var promise_tracker_service_1 = require('./promise-tracker.service');
-var inactiveStyle = core_1.style({
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var animations_1 = require("@angular/animations");
+var promise_tracker_service_1 = require("./promise-tracker.service");
+var inactiveStyle = animations_1.style({
     opacity: 0,
 });
 var timing = '.3s ease';
@@ -21,25 +27,25 @@ var BusyBackdropComponent = (function () {
     BusyBackdropComponent.prototype.isActive = function () {
         return this.tracker.isActive();
     };
-    BusyBackdropComponent = __decorate([
-        core_1.Component({
-            selector: 'ng-busy-backdrop',
-            template: "\n        <div class=\"ng-busy-backdrop\"\n             @fadeInOut\n             *ngIf=\"isActive()\">\n        </div>\n    ",
-            animations: [
-                core_1.trigger('fadeInOut', [
-                    core_1.transition('void => *', [
-                        inactiveStyle,
-                        core_1.animate(timing)
-                    ]),
-                    core_1.transition('* => void', [
-                        core_1.animate(timing, inactiveStyle)
-                    ])
-                ])
-            ]
-        }), 
-        __metadata('design:paramtypes', [promise_tracker_service_1.PromiseTrackerService])
-    ], BusyBackdropComponent);
     return BusyBackdropComponent;
 }());
+BusyBackdropComponent = __decorate([
+    core_1.Component({
+        selector: 'ng-busy-backdrop',
+        template: "\n        <div class=\"ng-busy-backdrop\"\n             @fadeInOut\n             *ngIf=\"isActive()\">\n        </div>\n    ",
+        animations: [
+            animations_1.trigger('fadeInOut', [
+                animations_1.transition('void => *', [
+                    inactiveStyle,
+                    animations_1.animate(timing)
+                ]),
+                animations_1.transition('* => void', [
+                    animations_1.animate(timing, inactiveStyle)
+                ])
+            ])
+        ]
+    }),
+    __metadata("design:paramtypes", [promise_tracker_service_1.PromiseTrackerService])
+], BusyBackdropComponent);
 exports.BusyBackdropComponent = BusyBackdropComponent;
 //# sourceMappingURL=busy-backdrop.component.js.map

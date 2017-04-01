@@ -8,7 +8,7 @@
 
 Rewritten from [angular-busy](https://github.com/cgross/angular-busy), and add some new features in terms of Angular 2.
 
-### Built with Angular 2.0.0
+### Built with Angular 4.0.1
 
 ## Demo
 
