@@ -135,15 +135,13 @@ import {NgModule} from '@angular/core';
 import {BusyModule, BusyConfig} from 'angular2-busy';
 
 @NgModule({
-	imports: [
+    imports: [
     	// ...
         BusyModule.forRoot(
         	new BusyConfig({
             	message: 'Don\'t panic!',
                 backdrop: false,
-                template: `
-                    <div>{{message}}</div>
-                `,
+                template: '<div>{{message}}</div>',
                 delay: 200,
                 minDuration: 600,
                 wrapperClass: 'my-class'
@@ -172,18 +170,10 @@ You may need this in your `systemjs.config.js`:
     },
     map: {
         // ...
-        'ts-metadata-helper': 'npm:ts-metadata-helper',
-        'angular2-dynamic-component': 'npm:angular2-dynamic-component',
         'angular2-busy': 'npm:angular2-busy'
     },
     packages: {
         // ...
-        'ts-metadata-helper': {
-            defaultExtension: 'js'
-        },
-        'angular2-dynamic-component': {
-            defaultExtension: 'js'
-        },
         'angular2-busy': {
             main: './index.js',
             defaultExtension: 'js'
