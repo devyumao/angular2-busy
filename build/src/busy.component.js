@@ -14,9 +14,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var animations_1 = require("@angular/animations");
 var promise_tracker_service_1 = require("./promise-tracker.service");
-var inactiveStyle = animations_1.style({
+var inactiveStyle = core_1.style({
     opacity: 0,
     transform: 'translateY(-40px)'
 });
@@ -67,21 +66,20 @@ var BusyComponent = (function () {
 BusyComponent = __decorate([
     core_1.Component({
         selector: 'ng-busy',
-        template: "\n        <div [class]=\"wrapperClass\" *ngIf=\"isActive()\" @flyInOut>\n            <ng-container *ngComponentOutlet=\"TemplateComponent; ngModuleFactory: nmf;\"></ng-container>\n        </div>\n    ",
+        template: "\n        <div [class]=\"wrapperClass\" *ngIf=\"isActive()\" @flyInOut>\n            <DynamicComponent [componentTemplate]=\"template\" [componentContext]=\"context\">\n            </DynamicComponent>\n        </div>\n    ",
         animations: [
-            animations_1.trigger('flyInOut', [
-                animations_1.transition('void => *', [
+            core_1.trigger('flyInOut', [
+                core_1.transition('void => *', [
                     inactiveStyle,
-                    animations_1.animate(timing)
+                    core_1.animate(timing)
                 ]),
-                animations_1.transition('* => void', [
-                    animations_1.animate(timing, inactiveStyle)
+                core_1.transition('* => void', [
+                    core_1.animate(timing, inactiveStyle)
                 ])
             ])
         ]
     }),
-    __metadata("design:paramtypes", [promise_tracker_service_1.PromiseTrackerService,
-        core_1.Compiler])
+    __metadata("design:paramtypes", [promise_tracker_service_1.PromiseTrackerService])
 ], BusyComponent);
 exports.BusyComponent = BusyComponent;
 //# sourceMappingURL=busy.component.js.map

@@ -14,9 +14,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var animations_1 = require("@angular/animations");
 var promise_tracker_service_1 = require("./promise-tracker.service");
-var inactiveStyle = animations_1.style({
+var inactiveStyle = core_1.style({
     opacity: 0,
 });
 var timing = '.3s ease';
@@ -34,13 +33,13 @@ BusyBackdropComponent = __decorate([
         selector: 'ng-busy-backdrop',
         template: "\n        <div class=\"ng-busy-backdrop\"\n             @fadeInOut\n             *ngIf=\"isActive()\">\n        </div>\n    ",
         animations: [
-            animations_1.trigger('fadeInOut', [
-                animations_1.transition('void => *', [
+            core_1.trigger('fadeInOut', [
+                core_1.transition('void => *', [
                     inactiveStyle,
-                    animations_1.animate(timing)
+                    core_1.animate(timing)
                 ]),
-                animations_1.transition('* => void', [
-                    animations_1.animate(timing, inactiveStyle)
+                core_1.transition('* => void', [
+                    core_1.animate(timing, inactiveStyle)
                 ])
             ])
         ]

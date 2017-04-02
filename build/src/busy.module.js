@@ -12,7 +12,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
-var animations_1 = require("@angular/platform-browser/animations");
+var index_1 = require("angular2-dynamic-component/index");
 var busy_directive_1 = require("./busy.directive");
 var busy_service_1 = require("./busy.service");
 var busy_backdrop_component_1 = require("./busy-backdrop.component");
@@ -35,7 +35,7 @@ BusyModule = BusyModule_1 = __decorate([
     core_1.NgModule({
         imports: [
             common_1.CommonModule,
-            animations_1.BrowserAnimationsModule
+            index_1.DynamicComponentModule
         ],
         declarations: [
             busy_directive_1.BusyDirective,
