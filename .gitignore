@@ -1,9 +1,8 @@
-# Node Files #
+# Node Files
 /node_modules
 npm-debug.log
-.npmignore
 
-# OS generated files #
+# OS generated files
 .DS_Store
 ehthumbs.db
 Icon?
@@ -11,3 +10,7 @@ Thumbs.db
 
 # Style scripts
 build/busy.js
+
+# AOT files
+*.ngsummary.json
+*.ngfactory.ts
