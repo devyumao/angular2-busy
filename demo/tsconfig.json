@@ -9,16 +9,18 @@
         "outDir": "build",
         "lib": ["es2015", "dom"]
     },
-    "files": [
-        "src/index.ts",
-        "src/busy-backdrop.component.ts",
-        "src/busy-config.ts",
-        "src/busy.component.ts",
-        "src/busy.directive.ts",
-        "src/busy.module.ts",
-        "src/busy.service.ts",
-        "src/promise-tracker.service.ts",
-        "src/util.ts"
+    "exclude": [
+        "node_modules",
+        "build",
+        "demo",
+        "test"
+    ],
+    "filesGlob": [
+        "./index.ts",
+        "./src/**/*.ts",
+        "./demo/**/*.ts",
+        "!./node_modules/**/*.ts",
+        "typings/browser.d.ts"
     ],
     "awesomeTypescriptLoaderOptions": {
         "resolveGlobs": true,

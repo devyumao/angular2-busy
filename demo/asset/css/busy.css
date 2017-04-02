@@ -3,7 +3,7 @@
 }
 .ng-busy,
 .ng-busy > *,
-.ng-busy > dynamiccomponent > * {
+.ng-busy > ng-component > * {
   position: absolute;
   top: 0px;
   left: 0px;

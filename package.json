@@ -29,18 +29,22 @@
     "watch:busy": "npm run watch",
     "build:demo": "cross-env NODE_ENV=demo webpack --progress",
     "watch:demo": "cross-env NODE_ENV=demo webpack-dev-server --inline --progress --profile --colors --watch --display-error-details --display-cached --content-base demo/asset",
-    "test": "cross-env NODE_ENV=test webpack --inline --progress --colors --watch --content-base test"
+    "test": "cross-env NODE_ENV=test webpack --inline --progress --colors --watch --content-base test",
+    "ngc": "node_modules/.bin/ngc",
+    "tsc": "node_modules/.bin/tsc"
   },
   "devDependencies": {
     "@angular/animations": "^4.0.1",
     "@angular/common": "^4.0.1",
     "@angular/compiler": "^4.0.1",
+    "@angular/compiler-cli": "^4.0.1",
     "@angular/core": "^4.0.1",
     "@angular/forms": "^4.0.1",
     "@angular/http": "^4.0.1",
     "@angular/platform-browser": "^4.0.1",
     "@angular/platform-browser-dynamic": "^4.0.1",
     "@angular/router": "^4.0.1",
+    "@types/core-js": "^0.9.41",
     "autoprefixer": "^6.3.7",
     "awesome-typescript-loader": "^0.19.1",
     "bootstrap": "^4.0.0-alpha.2",
