@@ -32,11 +32,13 @@ Import the `BusyModule` in your root application module:
 
 ```typescript
 import {NgModule} from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {BusyModule} from 'angular2-busy';
 
 @NgModule({
 	imports: [
     	// ...
+        BrowserAnimationsModule,
         BusyModule
     ],
 	// ...
