@@ -3,7 +3,15 @@
  * @author yumao<yuzhang.lille@gmail.com>
  */
 
-import {Component, Compiler, NgModule, NgModuleFactory, Injectable, DoCheck, OnDestroy} from '@angular/core';
+import {
+    Component,
+    Compiler,
+    NgModule,
+    NgModuleFactory,
+    Injectable,
+    DoCheck,
+    OnDestroy
+} from '@angular/core';
 import {trigger, state, style, transition, animate} from '@angular/animations';
 
 import {PromiseTrackerService} from './promise-tracker.service';
@@ -83,15 +91,12 @@ export class BusyComponent implements DoCheck, OnDestroy {
     }
 
     clearDynamicTemplateCache() {
-        if (this.nmf) {
-            // You can see an internal state of compiler cache using the instruction:
-            // console.log(this.compiler._delegate._compiledNgModuleCache)
-            // See https://github.com/angular/angular/blob/master/packages/compiler/src/jit/compiler.ts#L137
-            // moduleMeta.type.reference is equal "TemplateModule"
-
-            this.compiler.clearCacheFor(this.nmf.moduleType);
-            this.nmf = null;
+        if (!this.nmf) {
+            return;
         }
+
+        this.compiler.clearCacheFor(this.nmf.moduleType);
+        this.nmf = null;
     }
 
     isActive() {

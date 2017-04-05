@@ -23,7 +23,11 @@ var BusyComponent = (function () {
             return;
         }
         this.lastMessage = this.message;
+        this.clearDynamicTemplateCache();
         this.createDynamicTemplate();
+    };
+    BusyComponent.prototype.ngOnDestroy = function () {
+        this.clearDynamicTemplateCache();
     };
     BusyComponent.prototype.createDynamicTemplate = function () {
         var _a = this, template = _a.template, message = _a.message;
@@ -53,6 +57,13 @@ var BusyComponent = (function () {
         TemplateModule.ctorParameters = function () { return []; };
         this.TemplateComponent = TemplateComponent;
         this.nmf = this.compiler.compileModuleSync(TemplateModule);
+    };
+    BusyComponent.prototype.clearDynamicTemplateCache = function () {
+        if (!this.nmf) {
+            return;
+        }
+        this.compiler.clearCacheFor(this.nmf.moduleType);
+        this.nmf = null;
     };
     BusyComponent.prototype.isActive = function () {
         return this.tracker.isActive();
