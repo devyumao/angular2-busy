@@ -3,7 +3,7 @@
  * @author yumao<yuzhang.lille@gmail.com>
  */
 
-import {Component, Compiler, NgModule, NgModuleFactory, Injectable, DoCheck} from '@angular/core';
+import {Component, Compiler, NgModule, NgModuleFactory, Injectable, DoCheck, OnDestroy} from '@angular/core';
 import {trigger, state, style, transition, animate} from '@angular/animations';
 
 import {PromiseTrackerService} from './promise-tracker.service';
@@ -38,7 +38,7 @@ export interface IBusyContext {
         ])
     ]
 })
-export class BusyComponent implements DoCheck {
+export class BusyComponent implements DoCheck, OnDestroy {
     TemplateComponent;
     private nmf: NgModuleFactory<any>;
     wrapperClass: string;
@@ -56,7 +56,12 @@ export class BusyComponent implements DoCheck {
             return;
         }
         this.lastMessage = this.message;
+        this.clearDynamicTemplateCache();
         this.createDynamicTemplate();
+    }
+
+    ngOnDestroy(): void {
+        this.clearDynamicTemplateCache();
     }
 
     createDynamicTemplate() {
@@ -75,6 +80,18 @@ export class BusyComponent implements DoCheck {
 
         this.TemplateComponent = TemplateComponent;
         this.nmf = this.compiler.compileModuleSync(TemplateModule);
+    }
+
+    clearDynamicTemplateCache() {
+        if (this.nmf) {
+            // You can see an internal state of compiler cache using the instruction:
+            // console.log(this.compiler._delegate._compiledNgModuleCache)
+            // See https://github.com/angular/angular/blob/master/packages/compiler/src/jit/compiler.ts#L137
+            // moduleMeta.type.reference is equal "TemplateModule"
+
+            this.compiler.clearCacheFor(this.nmf.moduleType);
+            this.nmf = null;
+        }
     }
 
     isActive() {
