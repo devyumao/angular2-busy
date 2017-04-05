@@ -11,3 +11,6 @@
 /webpack.config.js
 
 .gitignore
+
+*.ngsummary.json
+*.ngfactory.ts
