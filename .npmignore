@@ -1,0 +1,16 @@
+/node_modules
+
+/build/busy.js
+/config
+/demo
+/test
+/typings
+/tsconfig.json
+/tslint.json
+/typings.json
+/webpack.config.js
+
+.gitignore
+
+*.ngsummary.json
+*.ngfactory.ts
