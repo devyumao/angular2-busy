@@ -6,7 +6,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
-var animations_1 = require("@angular/platform-browser/animations");
 var busy_directive_1 = require("./busy.directive");
 var busy_service_1 = require("./busy.service");
 var busy_backdrop_component_1 = require("./busy-backdrop.component");
@@ -28,8 +27,7 @@ var BusyModule = (function () {
 BusyModule.decorators = [
     { type: core_1.NgModule, args: [{
                 imports: [
-                    common_1.CommonModule,
-                    animations_1.BrowserAnimationsModule
+                    common_1.CommonModule
                 ],
                 declarations: [
                     busy_directive_1.BusyDirective,

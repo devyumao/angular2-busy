@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {BusyModule, BusyConfig} from '../..';
 // import {BusyModule, BusyConfig} from 'angular2-busy';
@@ -16,7 +17,8 @@ import {TableComponent} from './table';
         BrowserModule,
         FormsModule,
         HttpModule,
-        BusyModule
+        BusyModule,
+        BrowserAnimationsModule
         // BusyModule.forRoot(new BusyConfig({
         //     message: 'test',
         //     backdrop: false
