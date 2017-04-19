@@ -1,7 +1,7 @@
 {
   "name": "angular2-busy",
   "description": "Angular 2 Busy: show busy/loading indicators on any promise, or on any Observable's subscription",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devyumao/angular2-busy.git"

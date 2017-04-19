@@ -6,11 +6,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
+var compiler_1 = require("@angular/compiler");
 var busy_directive_1 = require("./busy.directive");
 var busy_service_1 = require("./busy.service");
 var busy_backdrop_component_1 = require("./busy-backdrop.component");
 var busy_component_1 = require("./busy.component");
 var busy_config_1 = require("./busy-config");
+// Workaround for Compiler in AOT
+// https://github.com/angular/angular/issues/15510#issuecomment-294301758
+function createJitCompiler() {
+    return new compiler_1.JitCompilerFactory([{ useDebug: false, useJit: true }]).createCompiler();
+}
+exports.createJitCompiler = createJitCompiler;
 var BusyModule = (function () {
     function BusyModule() {
     }
@@ -34,7 +41,10 @@ BusyModule.decorators = [
                     busy_component_1.BusyComponent,
                     busy_backdrop_component_1.BusyBackdropComponent,
                 ],
-                providers: [busy_service_1.BusyService],
+                providers: [
+                    busy_service_1.BusyService,
+                    { provide: core_1.Compiler, useFactory: createJitCompiler },
+                ],
                 exports: [busy_directive_1.BusyDirective],
                 entryComponents: [
                     busy_component_1.BusyComponent,

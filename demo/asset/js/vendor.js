@@ -63507,13 +63507,76 @@
 	}
 	Object.defineProperty(exports, "__esModule", { value: true });
 	__export(__webpack_require__(52));
-	__export(__webpack_require__(55));
+	__export(__webpack_require__(53));
 	__export(__webpack_require__(56));
-	__export(__webpack_require__(59));
+	__export(__webpack_require__(57));
 	//# sourceMappingURL=index.js.map
 
 /***/ },
 /* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * @file Module: Busy
+	 * @author yumao<yuzhang.lille@gmail.com>
+	 */
+	"use strict";
+	Object.defineProperty(exports, "__esModule", { value: true });
+	var core_1 = __webpack_require__(4);
+	var common_1 = __webpack_require__(37);
+	var compiler_1 = __webpack_require__(3);
+	var busy_directive_1 = __webpack_require__(53);
+	var busy_service_1 = __webpack_require__(56);
+	var busy_backdrop_component_1 = __webpack_require__(59);
+	var busy_component_1 = __webpack_require__(58);
+	var busy_config_1 = __webpack_require__(57);
+	// Workaround for Compiler in AOT
+	// https://github.com/angular/angular/issues/15510#issuecomment-294301758
+	function createJitCompiler() {
+	    return new compiler_1.JitCompilerFactory([{ useDebug: false, useJit: true }]).createCompiler();
+	}
+	exports.createJitCompiler = createJitCompiler;
+	var BusyModule = (function () {
+	    function BusyModule() {
+	    }
+	    BusyModule.forRoot = function (config) {
+	        return {
+	            ngModule: BusyModule,
+	            providers: [
+	                { provide: busy_config_1.BusyConfig, useValue: config }
+	            ]
+	        };
+	    };
+	    return BusyModule;
+	}());
+	BusyModule.decorators = [
+	    { type: core_1.NgModule, args: [{
+	                imports: [
+	                    common_1.CommonModule
+	                ],
+	                declarations: [
+	                    busy_directive_1.BusyDirective,
+	                    busy_component_1.BusyComponent,
+	                    busy_backdrop_component_1.BusyBackdropComponent,
+	                ],
+	                providers: [
+	                    busy_service_1.BusyService,
+	                    { provide: core_1.Compiler, useFactory: createJitCompiler },
+	                ],
+	                exports: [busy_directive_1.BusyDirective],
+	                entryComponents: [
+	                    busy_component_1.BusyComponent,
+	                    busy_backdrop_component_1.BusyBackdropComponent
+	                ]
+	            },] },
+	];
+	/** @nocollapse */
+	BusyModule.ctorParameters = function () { return []; };
+	exports.BusyModule = BusyModule;
+	//# sourceMappingURL=busy.module.js.map
+
+/***/ },
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -63524,11 +63587,11 @@
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var core_1 = __webpack_require__(4);
 	var Subscription_1 = __webpack_require__(10);
-	var util_1 = __webpack_require__(53);
-	var promise_tracker_service_1 = __webpack_require__(54);
-	var busy_service_1 = __webpack_require__(55);
-	var busy_component_1 = __webpack_require__(57);
-	var busy_backdrop_component_1 = __webpack_require__(58);
+	var util_1 = __webpack_require__(54);
+	var promise_tracker_service_1 = __webpack_require__(55);
+	var busy_service_1 = __webpack_require__(56);
+	var busy_component_1 = __webpack_require__(58);
+	var busy_backdrop_component_1 = __webpack_require__(59);
 	/**
 	 * ### Syntax
 	 *
@@ -63634,7 +63697,7 @@
 	//# sourceMappingURL=busy.directive.js.map
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports) {
 
 	/**
@@ -63740,7 +63803,7 @@
 	//# sourceMappingURL=util.js.map
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -63832,7 +63895,7 @@
 	//# sourceMappingURL=promise-tracker.service.js.map
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -63842,7 +63905,7 @@
 	"use strict";
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var core_1 = __webpack_require__(4);
-	var busy_config_1 = __webpack_require__(56);
+	var busy_config_1 = __webpack_require__(57);
 	var BusyService = (function () {
 	    function BusyService(config) {
 	        this.config = config || new busy_config_1.BusyConfig();
@@ -63860,7 +63923,7 @@
 	//# sourceMappingURL=busy.service.js.map
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports) {
 
 	/**
@@ -63890,7 +63953,7 @@
 	//# sourceMappingURL=busy-config.js.map
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -63901,7 +63964,7 @@
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var core_1 = __webpack_require__(4);
 	var animations_1 = __webpack_require__(49);
-	var promise_tracker_service_1 = __webpack_require__(54);
+	var promise_tracker_service_1 = __webpack_require__(55);
 	var inactiveStyle = animations_1.style({
 	    opacity: 0,
 	    transform: 'translateY(-40px)'
@@ -63991,7 +64054,7 @@
 	//# sourceMappingURL=busy.component.js.map
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -64002,7 +64065,7 @@
 	Object.defineProperty(exports, "__esModule", { value: true });
 	var core_1 = __webpack_require__(4);
 	var animations_1 = __webpack_require__(49);
-	var promise_tracker_service_1 = __webpack_require__(54);
+	var promise_tracker_service_1 = __webpack_require__(55);
 	var inactiveStyle = animations_1.style({
 	    opacity: 0,
 	});
@@ -64039,59 +64102,6 @@
 	]; };
 	exports.BusyBackdropComponent = BusyBackdropComponent;
 	//# sourceMappingURL=busy-backdrop.component.js.map
-
-/***/ },
-/* 59 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * @file Module: Busy
-	 * @author yumao<yuzhang.lille@gmail.com>
-	 */
-	"use strict";
-	Object.defineProperty(exports, "__esModule", { value: true });
-	var core_1 = __webpack_require__(4);
-	var common_1 = __webpack_require__(37);
-	var busy_directive_1 = __webpack_require__(52);
-	var busy_service_1 = __webpack_require__(55);
-	var busy_backdrop_component_1 = __webpack_require__(58);
-	var busy_component_1 = __webpack_require__(57);
-	var busy_config_1 = __webpack_require__(56);
-	var BusyModule = (function () {
-	    function BusyModule() {
-	    }
-	    BusyModule.forRoot = function (config) {
-	        return {
-	            ngModule: BusyModule,
-	            providers: [
-	                { provide: busy_config_1.BusyConfig, useValue: config }
-	            ]
-	        };
-	    };
-	    return BusyModule;
-	}());
-	BusyModule.decorators = [
-	    { type: core_1.NgModule, args: [{
-	                imports: [
-	                    common_1.CommonModule
-	                ],
-	                declarations: [
-	                    busy_directive_1.BusyDirective,
-	                    busy_component_1.BusyComponent,
-	                    busy_backdrop_component_1.BusyBackdropComponent,
-	                ],
-	                providers: [busy_service_1.BusyService],
-	                exports: [busy_directive_1.BusyDirective],
-	                entryComponents: [
-	                    busy_component_1.BusyComponent,
-	                    busy_backdrop_component_1.BusyBackdropComponent
-	                ]
-	            },] },
-	];
-	/** @nocollapse */
-	BusyModule.ctorParameters = function () { return []; };
-	exports.BusyModule = BusyModule;
-	//# sourceMappingURL=busy.module.js.map
 
 /***/ },
 /* 60 */,

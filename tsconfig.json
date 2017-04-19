@@ -7,10 +7,11 @@
         "sourceMap": true,
         "declaration": false,
         "outDir": "build",
-        "lib": ["es2015", "dom"]
+        "lib": ["es2015", "dom"],
+        "moduleResolution": "node"
     },
     "files": [
-        "src/index.ts"
+        "./src/index.ts"
     ],
     "awesomeTypescriptLoaderOptions": {
         "resolveGlobs": true,
